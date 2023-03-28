@@ -12,7 +12,7 @@
     |port|string|false|端口号|8080, 80|
     |type|int|false|代理协议类型 （1 = http 2 = https）|1, 2|
     |anonymous|int|false|匿名类型 （1 = 透明 2 = 普匿 3 = 高匿）|1, 2, 3|
-    |country|string|false|国家|中国, 美国, 国外 （除中国之外所有国家）|
+    |country|string|false|国家|中国, 美国, 外国 （除中国之外所有国家）|
     |province|string|false|省（只有中国地区数据才有此字段）|江苏省, 浙江省|
 
 * 响应数据
