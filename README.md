@@ -1,4 +1,13 @@
-# Shark-Proxy | 免费代理IP库 | Free Proxy
+<h1 align="center">Shark - Proxy</h1>
+
+<p align="center">免费代理IP库 | Free Proxy</p>
+
+<p align=center>
+<a href="https://proxy.sage.run">首页</a> |
+<a href="https://github.com/Sage520/shark_proxy">Github</a>
+</p>
+
+***
 
 ## 警告
 本站免费代理IP均收集自互联网，本站不对免费代理的有效性负责，请合法使用免费代理，由用户使用免费代理IP带来的法律责任与本站无关。
@@ -31,6 +40,12 @@
 ## 访问频率限制
 接口限制并发 1秒 / 1 次，多次触流控会进入黑名单！
 
+## TODO
+ - 平台 - 优化前端页面
+ - 平台 - 支持socks5类型
+ - 爬虫 - 支持更多数据源
+ - 校验器 - 使用Golang重写
+
 ## 参考项目
  - [proxy_pool](https://github.com/jhao104/proxy_pool)
  - [ProxyIpLib](https://github.com/jiangxianli/ProxyIpLib)
@@ -39,5 +54,4 @@
  - [Lazycat](https://github.com/1054711110)
 
 ## Stargazers over time
-
 [![Stargazers over time](https://starchart.cc/Sage520/shark_proxy.svg)](https://starchart.cc/Sage520/shark_proxy)
