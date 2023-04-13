@@ -3,8 +3,8 @@
 <p align="center">免费代理IP库 | Free Proxy</p>
 
 <p align=center>
-<a href="https://proxy.sage.run">首页</a> |
-<a href="https://github.com/Sage520/shark_proxy">Github</a>
+<a href="https://proxy.sage.run" target="_blank">首页</a> |
+<a href="https://github.com/Sage520/shark_proxy" target="_blank">Github</a>
 </p>
 
 ***
