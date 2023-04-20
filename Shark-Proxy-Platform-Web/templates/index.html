@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sage - 免费代理IP库</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body>
+<div id="app">
+    <div style="display: flex; justify-content: space-around; align-items: center; flex-direction: column">
+
+        <!-- 头部 -->
+        <header>
+            <div class="header-left">Sage - 免费代理IP库</div>
+        </header>
+
+        <div class="header-hr">
+            <el-divider></el-divider>
+        </div>
+
+        <div class="content">
+            <div class="table">
+                <el-table
+                        ref="table"
+                        border="true"
+                        stripe="true"
+                        :data="tableData"
+                        :header-cell-style="headStyle"
+                        :cell-style="rowStyle"
+                        empty-text
+                        size="medium"
+                >
+                    <el-table-column
+                            prop="ip"
+                            label="IP"
+                            width="140"
+                    >
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="port"
+                            label="端口"
+                            width="120">
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="country"
+                            label="国家"
+                            width="120"
+                    >
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="province"
+                            label="省"
+                            width="120"
+                    >
+                        <template slot-scope="scope">
+                            <span>{{ (scope.row.province == null) ? '-' : scope.row.province }}</span>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="respTime"
+                            label="响应时间"
+                            width="120"
+                    >
+                        <template slot-scope="scope">
+                            <span>{{ scope.row.respTime + ' 秒' }}</span>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="type"
+                            label="类型"
+                            width="120"
+                    >
+                        <template slot-scope="scope">
+                            <el-tag
+                                    :type="typeTagFormat(scope.row.type)"
+                                    disable-transitions>{{ typeFormat(scope.row.type) }}</el-tag>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="anonymous"
+                            label="匿名度"
+                            width="120"
+                    >
+                        <template slot-scope="scope">
+                            <el-tag
+                                    :type="anonymousTagFormat(scope.row.anonymous)"
+                                    disable-transitions>{{ anonymousFormat(scope.row.anonymous) }}</el-tag>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="lastCheckTime"
+                            label="最后验证时间"
+                            width="210"
+                    >
+                    </el-table-column>
+                </el-table>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination">
+                <el-pagination
+                        background
+                        layout="prev, pager, next"
+                        :total="pageCount"
+                        :page-size="pageSize"
+                        @current-change="pageChange"
+                        @prev-click="pageChange"
+                        @next-click="pageChange"
+                >
+                </el-pagination>
+            </div>
+        </div>
+
+        <footer>
+                <p>
+                    <p>免责声明</p>
+                    <p>本站免费代理IP均收集自互联网，本站不对免费代理的有效性负责，请合法使用免费代理，由用户使用免费代理IP带来的法律责任与本站无关。</p>
+                </p >
+        </footer>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script src="https://unpkg.com/element-ui@2.15.13/lib/index.js"></script>
+<script src="https://unpkg.com/axios@1.3.4/dist/axios.min.js"></script>
+<script type="text/javascript">
+    const vm = new Vue({ // 配置对象 options
+        // 配置选项(option)
+        el: '#app',  // element: 指定用vue来管理页面中的哪个标签区域
+        data: {
+            tableData: [],
+            pageNo: 1,
+            pageSize: 10,
+            pageCount: 0
+        },
+        created() {
+            this.getTableData()
+        },
+        methods: {
+            // 请求数据
+            getTableData() {
+                axios.get(`/proxy/list?pageNo=${this.pageNo}`).then((res) => {
+                    console.log(res)
+                    if (res.status === 200 && res.data.code === 200) {
+                        let data = res.data.data
+                        this.pageCount = data.pageCount
+                        this.pageNo = data.pageNo
+                        this.pageSize = data.pageSize
+                        this.tableData = data.list
+                    }
+                })
+            },
+            // 表格切换页数
+            pageChange(val) {
+                this.pageNo = val
+                this.getTableData()
+            },
+            // 类型格式化
+            typeFormat(type) {
+                if (type === undefined || type === null) {
+                    return '-'
+                }
+                if (type === 1) {
+                    return 'HTTP'
+                }
+                if (type === 2) {
+                    return 'HTTPS'
+                }
+                if (type === 3) {
+                    return 'SOCKS5'
+                }
+            },
+            // 类型标签样式格式化
+            typeTagFormat(type) {
+                if (type === undefined || type === null) {
+                    return 'danger'
+                }
+                if (type === 1) {
+                    return 'primary'
+                }
+                if (type === 2) {
+                    return 'success'
+                }
+                if (type === 3) {
+                    return 'warning'
+                }
+            },
+            // 匿名度格式化
+            anonymousFormat(anonymous) {
+                if (anonymous === undefined || anonymous === null) {
+                    return '-'
+                }
+                if (anonymous === 1) {
+                    return '透明'
+                }
+                if (anonymous === 2) {
+                    return '普匿'
+                }
+                if (anonymous === 3) {
+                    return '高匿'
+                }
+            },
+            // 匿名度标签样式格式化
+            anonymousTagFormat(anonymous) {
+                if (anonymous === undefined || anonymous === null) {
+                    return 'danger'
+                }
+                if (anonymous === 1) {
+                    return 'warning'
+                }
+                if (anonymous === 2) {
+                    return 'primary'
+                }
+                if (anonymous === 3) {
+                    return 'success'
+                }
+            },
+            rowStyle() {
+                return "text-align: center"
+            },
+            headStyle() {
+                return "text-align: center"
+            },
+        }
+    })
+</script>
+</body>
+
+</html>
