@@ -9,233 +9,218 @@
 </head>
 
 <body>
-<div id="app">
-    <div style="display: flex; justify-content: space-around; align-items: center; flex-direction: column">
+    <div id="app">
+        <div style="display: flex; justify-content: space-around; align-items: center; flex-direction: column">
 
-        <!-- 头部 -->
-        <header>
-            <div class="header-left">Sage - 免费代理IP库</div>
-        </header>
+            <!-- 头部 -->
+            <header>
+                <div class="header-left">Sage - 免费代理IP库</div>
+                <div class="header-right">
+                    <a href="https://github.com/Sage520/shark_proxy" class="github-corner" aria-label="View source on GitHub">
+                        <svg width="50" height="50" viewBox="0 0 250 250"
+                            style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+                            aria-hidden="true">
+                            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+                            <path
+                                d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                                fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+                            <path
+                                d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                                fill="currentColor" class="octo-body">
+                            </path>
+                        </svg>
+                    </a>
 
-        <div class="header-hr">
-            <el-divider></el-divider>
-        </div>
+                </div>
+            </header>
 
-        <div class="content">
-            <div class="table">
-                <el-table
-                        ref="table"
-                        border="true"
-                        stripe="true"
-                        :data="tableData"
-                        :header-cell-style="headStyle"
-                        :cell-style="rowStyle"
-                        empty-text
-                        size="medium"
-                >
-                    <el-table-column
-                            prop="ip"
-                            label="IP"
-                            width="140"
-                    >
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="port"
-                            label="端口"
-                            width="120">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="country"
-                            label="国家"
-                            width="120"
-                    >
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="province"
-                            label="省"
-                            width="120"
-                    >
-                        <template slot-scope="scope">
-                            <span>{{ (scope.row.province == null) ? '-' : scope.row.province }}</span>
-                        </template>
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="respTime"
-                            label="响应时间"
-                            width="120"
-                    >
-                        <template slot-scope="scope">
-                            <span>{{ scope.row.respTime + ' 秒' }}</span>
-                        </template>
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="type"
-                            label="类型"
-                            width="120"
-                    >
-                        <template slot-scope="scope">
-                            <el-tag
-                                    :type="typeTagFormat(scope.row.type)"
-                                    disable-transitions>{{ typeFormat(scope.row.type) }}</el-tag>
-                        </template>
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="anonymous"
-                            label="匿名度"
-                            width="120"
-                    >
-                        <template slot-scope="scope">
-                            <el-tag
-                                    :type="anonymousTagFormat(scope.row.anonymous)"
-                                    disable-transitions>{{ anonymousFormat(scope.row.anonymous) }}</el-tag>
-                        </template>
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="lastCheckTime"
-                            label="最后验证时间"
-                            width="210"
-                    >
-                    </el-table-column>
-                </el-table>
+            <div class="header-hr">
+                <el-divider></el-divider>
             </div>
 
-            <!-- 分页 -->
-            <div class="pagination">
-                <el-pagination
-                        background
-                        layout="prev, pager, next"
-                        :total="pageCount"
-                        :page-size="pageSize"
-                        @current-change="pageChange"
-                        @prev-click="pageChange"
-                        @next-click="pageChange"
-                >
-                </el-pagination>
-            </div>
-        </div>
+            <div class="content">
+                <div class="table">
+                    <el-table ref="table" border="true" stripe="true" :data="tableData" :header-cell-style="headStyle"
+                        :cell-style="rowStyle" empty-text size="medium">
+                        <el-table-column prop="ip" label="IP" width="140">
+                        </el-table-column>
 
-        <footer>
+                        <el-table-column prop="port" label="端口" width="120">
+                        </el-table-column>
+
+                        <el-table-column prop="country" label="国家" width="120">
+                        </el-table-column>
+
+                        <el-table-column prop="province" label="省" width="120">
+                            <template slot-scope="scope">
+                                <span>{{ (scope.row.province == null) ? '-' : scope.row.province }}</span>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column prop="respTime" label="响应时间" width="120">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.respTime + ' 秒' }}</span>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column prop="type" label="类型" width="120">
+                            <template slot-scope="scope">
+                                <el-tag :type="typeTagFormat(scope.row.type)" disable-transitions>{{
+                                    typeFormat(scope.row.type) }}</el-tag>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column prop="anonymous" label="匿名度" width="120">
+                            <template slot-scope="scope">
+                                <el-tag :type="anonymousTagFormat(scope.row.anonymous)" disable-transitions>{{
+                                    anonymousFormat(scope.row.anonymous) }}</el-tag>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column prop="lastCheckTime" label="最后验证时间" width="210">
+                        </el-table-column>
+                    </el-table>
+                </div>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <el-pagination background layout="prev, pager, next" :total="pageCount" :page-size="pageSize"
+                        @current-change="pageChange" @prev-click="pageChange" @next-click="pageChange">
+                    </el-pagination>
+                </div>
+            </div>
+
+            <footer>
                 <p>
-                    <p>免责声明</p>
-                    <p>本站免费代理IP均收集自互联网，本站不对免费代理的有效性负责，请合法使用免费代理，由用户使用免费代理IP带来的法律责任与本站无关。</p>
-                </p >
+                <p>免责声明</p>
+                <p>本站免费代理IP均收集自互联网，本站不对免费代理的有效性负责，请合法使用免费代理，由用户使用免费代理IP带来的法律责任与本站无关。</p>
+                </p>
+                <div>
+                    <!-- <div class="github-badge">
+                        <span class="badge-subject">Git</span><span class="badge-value bg-blue">Hub</span>
+                      </div>
+                     <div> -->
+
+                    浏览量：👀<span class="auto_count_pv"></span></span> | 访客数：👦<span class="auto_count_uv"></span></span>
+
+
+                </div>
+
+        </div>
         </footer>
 
     </div>
 
-</div>
+    </div>
 
-<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js"></script>
-<script src="https://unpkg.com/element-ui@2.15.13/lib/index.js"></script>
-<script src="https://unpkg.com/axios@1.3.4/dist/axios.min.js"></script>
-<script type="text/javascript">
-    const vm = new Vue({ // 配置对象 options
-        // 配置选项(option)
-        el: '#app',  // element: 指定用vue来管理页面中的哪个标签区域
-        data: {
-            tableData: [],
-            pageNo: 1,
-            pageSize: 10,
-            pageCount: 0
-        },
-        created() {
-            this.getTableData()
-        },
-        methods: {
-            // 请求数据
-            getTableData() {
-                axios.get(`/proxy/list?pageNo=${this.pageNo}`).then((res) => {
-                    console.log(res)
-                    if (res.status === 200 && res.data.code === 200) {
-                        let data = res.data.data
-                        this.pageCount = data.pageCount
-                        this.pageNo = data.pageNo
-                        this.pageSize = data.pageSize
-                        this.tableData = data.list
-                    }
-                })
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.15.13/lib/index.js"></script>
+    <script src="https://unpkg.com/axios@1.3.4/dist/axios.min.js"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js" crossorigin="anonymous"></script>
+    <script src="//open.source.lee23.top/auto-count-pv/js/auto-count-pv.js" crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript">
+        const vm = new Vue({ // 配置对象 options
+            // 配置选项(option)
+            el: '#app',  // element: 指定用vue来管理页面中的哪个标签区域
+            data: {
+                tableData: [],
+                pageNo: 1,
+                pageSize: 10,
+                pageCount: 0
             },
-            // 表格切换页数
-            pageChange(val) {
-                this.pageNo = val
+            created() {
                 this.getTableData()
             },
-            // 类型格式化
-            typeFormat(type) {
-                if (type === undefined || type === null) {
-                    return '-'
-                }
-                if (type === 1) {
-                    return 'HTTP'
-                }
-                if (type === 2) {
-                    return 'HTTPS'
-                }
-                if (type === 3) {
-                    return 'SOCKS5'
-                }
-            },
-            // 类型标签样式格式化
-            typeTagFormat(type) {
-                if (type === undefined || type === null) {
-                    return 'danger'
-                }
-                if (type === 1) {
-                    return 'primary'
-                }
-                if (type === 2) {
-                    return 'success'
-                }
-                if (type === 3) {
-                    return 'warning'
-                }
-            },
-            // 匿名度格式化
-            anonymousFormat(anonymous) {
-                if (anonymous === undefined || anonymous === null) {
-                    return '-'
-                }
-                if (anonymous === 1) {
-                    return '透明'
-                }
-                if (anonymous === 2) {
-                    return '普匿'
-                }
-                if (anonymous === 3) {
-                    return '高匿'
-                }
-            },
-            // 匿名度标签样式格式化
-            anonymousTagFormat(anonymous) {
-                if (anonymous === undefined || anonymous === null) {
-                    return 'danger'
-                }
-                if (anonymous === 1) {
-                    return 'warning'
-                }
-                if (anonymous === 2) {
-                    return 'primary'
-                }
-                if (anonymous === 3) {
-                    return 'success'
-                }
-            },
-            rowStyle() {
-                return "text-align: center"
-            },
-            headStyle() {
-                return "text-align: center"
-            },
-        }
-    })
-</script>
+            methods: {
+                // 请求数据
+                getTableData() {
+                    axios.get(`/proxy/list?pageNo=${this.pageNo}`).then((res) => {
+                        console.log(res)
+                        if (res.status === 200 && res.data.code === 200) {
+                            let data = res.data.data
+                            this.pageCount = data.pageCount
+                            this.pageNo = data.pageNo
+                            this.pageSize = data.pageSize
+                            this.tableData = data.list
+                        }
+                    })
+                },
+                // 表格切换页数
+                pageChange(val) {
+                    this.pageNo = val
+                    this.getTableData()
+                },
+                // 类型格式化
+                typeFormat(type) {
+                    if (type === undefined || type === null) {
+                        return '-'
+                    }
+                    if (type === 1) {
+                        return 'HTTP'
+                    }
+                    if (type === 2) {
+                        return 'HTTPS'
+                    }
+                    if (type === 3) {
+                        return 'SOCKS5'
+                    }
+                },
+                // 类型标签样式格式化
+                typeTagFormat(type) {
+                    if (type === undefined || type === null) {
+                        return 'danger'
+                    }
+                    if (type === 1) {
+                        return 'primary'
+                    }
+                    if (type === 2) {
+                        return 'success'
+                    }
+                    if (type === 3) {
+                        return 'warning'
+                    }
+                },
+                // 匿名度格式化
+                anonymousFormat(anonymous) {
+                    if (anonymous === undefined || anonymous === null) {
+                        return '-'
+                    }
+                    if (anonymous === 1) {
+                        return '透明'
+                    }
+                    if (anonymous === 2) {
+                        return '普匿'
+                    }
+                    if (anonymous === 3) {
+                        return '高匿'
+                    }
+                },
+                // 匿名度标签样式格式化
+                anonymousTagFormat(anonymous) {
+                    if (anonymous === undefined || anonymous === null) {
+                        return 'danger'
+                    }
+                    if (anonymous === 1) {
+                        return 'warning'
+                    }
+                    if (anonymous === 2) {
+                        return 'primary'
+                    }
+                    if (anonymous === 3) {
+                        return 'success'
+                    }
+                },
+                rowStyle() {
+                    return "text-align: center"
+                },
+                headStyle() {
+                    return "text-align: center"
+                },
+            }
+        })
+    </script>
 </body>
 
 </html>
