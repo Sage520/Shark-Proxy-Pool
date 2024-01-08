@@ -62,12 +62,14 @@ http://localhost:80
 * 响应数据
 ```json
 {
-    "msg":"操作成功",
-    "code":200,
-    "data":{
-        "ip":"183.89.115.39",
-        "port":"8080",
-        "type":"http"
+    "msg": "success",
+    "code": 200,
+    "data": {
+        "ip": "103.96.147.225",
+        "port": "3128",
+        "type": "http",
+        "lastCheckTime": 1704689100061,
+        "anonymous": 3
     }
 }
 ```

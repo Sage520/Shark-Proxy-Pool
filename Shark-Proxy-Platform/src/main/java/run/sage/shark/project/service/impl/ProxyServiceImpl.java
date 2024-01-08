@@ -186,6 +186,8 @@ public class ProxyServiceImpl implements ProxyService {
         fields.add("port");
         fields.add("status");
         fields.add("type");
+        fields.add("anonymous");
+        fields.add("lastCheckTime");
 
         Criteria criteria = Criteria.where("status").is(ProxyEnum.Status.SURVIVE.getCode());
 
@@ -204,7 +206,6 @@ public class ProxyServiceImpl implements ProxyService {
             if (!ProxyEnum.Anonymous.codeVerify(proxy.getAnonymous())) {
                 throw new BaseException("anonymous 参数错误，请重试");
             }
-            fields.add("anonymous");
             criteria.and("anonymous").is(proxy.getAnonymous());
         }
 
@@ -241,6 +242,8 @@ public class ProxyServiceImpl implements ProxyService {
                 vo.setIp(res.getIp());
                 vo.setPort(res.getPort());
                 vo.setType(res.getType());
+                vo.setAnonymous(res.getAnonymous());
+                vo.setLastCheckTime(res.getLastCheckTime());
                 return AjaxResult.success(vo);
             }
 
