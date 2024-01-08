@@ -1,45 +1,32 @@
 package run.sage.shark.project.service;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Service;
+import run.sage.shark.common.constant.RabbitConstants;
 import run.sage.shark.project.mq.to.ProxyCheckTo;
-import run.sage.shark.project.mq.to.ProxyGetRegionTo;
 import run.sage.shark.project.mq.to.ProxyUpdateTo;
 
-import java.util.List;
+import javax.annotation.Resource;
 
 /**
- * 兔子服务
+ * 兔子服务impl
  *
  * @author Sage
  * @date 2023/02/06
  */
-public interface RabbitService {
+@Service
+@RequiredArgsConstructor
+public class RabbitService {
 
-    /**
-     * 发送代理到检查队列
-     *
-     * @param proxies 代理
-     */
-    void sendProxyToCheckQueue(List<ProxyCheckTo> proxies);
+    private final RabbitTemplate rabbitTemplate;
 
-    /**
-     * 发送代理到检查队列
-     *
-     * @param proxy 代理
-     */
-    void sendProxyToCheckQueue(ProxyCheckTo proxy);
+    public void sendProxyToCheckQueue(ProxyCheckTo proxy) {
+        rabbitTemplate.convertAndSend(RabbitConstants.MQ_PROXY_EXCHANGE, RabbitConstants.MQ_PROXY_CHECK_QUEUE_KEY, proxy);
+    }
 
-    /**
-     * 发送代理到更新队列
-     *
-     * @param proxy 代理
-     */
-    void sendProxyToUpdateQueue(ProxyUpdateTo proxy);
-
-    /**
-     * 发送代理到地区队列
-     *
-     * @param proxy 代理
-     */
-    void sendProxyToRegionQueue(ProxyGetRegionTo proxy);
+    public void sendProxyToUpdateQueue(ProxyUpdateTo proxy) {
+        rabbitTemplate.convertAndSend(RabbitConstants.MQ_PROXY_EXCHANGE, RabbitConstants.MQ_PROXY_UPDATE_QUEUE_KEY, proxy);
+    }
 
 }
