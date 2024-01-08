@@ -13,16 +13,6 @@ import run.sage.shark.project.entity.Proxy;
 public interface ProxyRepository extends MongoRepository<Proxy, String> {
 
     /**
-     * 查询指定代理的校验次数
-     *
-     * @param ip   知识产权
-     * @param port 港口
-     * @return {@link Proxy}
-     */
-    @Query(fields = "{checkCount: 1}")
-    Proxy findCheckCountByIpAndPort(String ip, String port);
-
-    /**
      * 查询指定代理的超时次数和校验次数
      *
      * @param ip   知识产权
@@ -48,14 +38,5 @@ public interface ProxyRepository extends MongoRepository<Proxy, String> {
      * @return {@link long}
      */
     long countByTypeAndStatus(Integer type, Integer status);
-
-    /**
-     * 根据匿名度统计
-     *
-     * @param anonymous 匿名
-     * @param status    状态
-     * @return {@link long}
-     */
-    long countByAnonymousAndStatus(Integer anonymous, Integer status);
 
 }

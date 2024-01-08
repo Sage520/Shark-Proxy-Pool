@@ -24,7 +24,7 @@ public class ProxyCheckTo implements Serializable {
     private String port;
 
     /**
-     * 类型 (1 = http 2 = https)
+     * 类型 (1 = http 2 = https 3 = socks4 4 = socks5)
      */
     private Integer type;
 
