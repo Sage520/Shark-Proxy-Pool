@@ -1,0 +1,89 @@
+version: '3'
+services:
+  # RabbitMQ 3.9
+  service-rabbitmq:
+    container_name: service-rabbitmq
+    hostname: service-rabbitmq
+    image: rabbitmq:3.9-management-alpine
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - RABBITMQ_DEFAULT_USER=${username}
+      - RABBITMQ_DEFAULT_PASS=${password}
+    volumes:
+      - ${data}/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "9001:15672"
+      - "6002:5672"
+    networks:
+      - shark-proxy
+
+  # MongoDB 4.4
+  service-mongodb:
+    container_name: service-mongodb
+    hostname: service-mongodb
+    image: mongo:4.4
+    restart: always
+    command: mongod --auth
+    environment:
+      - TZ=Asia/Shanghai
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${password}
+      - MONGO_INITDB_DATABASE=shark_proxy
+    volumes:
+      - ${data}/mongodb/data:/data/db
+      - ${config}/mongo/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    ports:
+      - "6001:27017"
+    networks:
+      - shark-proxy
+
+  # Shark-Proxy-Platform
+  proxy-platform:
+    container_name: proxy-platform
+    hostname: proxy-platform
+    image: sage668/shark-proxy-platform:latest
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    depends_on:
+      - service-rabbitmq
+      - service-mongodb
+    ports:
+      - "80:8080"
+    networks:
+      - shark-proxy
+
+  # Shark-Proxy-Check
+  proxy-check:
+    container_name: proxy-check
+    hostname: proxy-check
+    image: sage668/shark-proxy-check:latest
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ${config}/check/config.yaml:/app/config/config.yaml
+    depends_on:
+      - proxy-platform
+    networks:
+      - shark-proxy
+
+  # Shark-Proxy-Spider
+  proxy-spider:
+    container_name: proxy-spider
+    hostname: proxy-spider
+    image: sage668/shark-proxy-spider:latest
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ${config}/spider/setting.py:/app/setting.py
+    depends_on:
+      - proxy-platform
+    networks:
+      - shark-proxy
+
+networks:
+  shark-proxy:
+    driver: bridge

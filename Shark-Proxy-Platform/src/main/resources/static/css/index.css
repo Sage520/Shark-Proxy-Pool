@@ -1,0 +1,111 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    margin: 20px auto 0 auto;
+    height: 50px;
+    justify-content: space-between;
+}
+
+.header-left {
+    width: 70%;
+}
+
+.header-left-one {
+    color: #409EFF;
+    font-size: 18px;
+}
+
+.header-right {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+/* 导航栏 */
+.el-menu{
+    border:0!important;
+}
+
+.menu-item-class {
+    cursor: pointer;
+    color: #409EFF;
+    font-size: 16px;
+}
+
+/* 语言切换 */
+.el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+    font-size: 16px;
+}
+.el-icon-arrow-down {
+    font-size: 16px;
+}
+
+.header-hr {
+    width: 63%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.content {
+    width: 70%;
+    height: 100%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.table {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    margin-top: 40px;
+}
+
+.footer-box {
+    margin-top: 20px;
+    width: 60%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    height: 50px;
+    text-align: center;
+}
+
+footer {
+    background-color: #409EFF;
+    opacity: 0.8;
+    color: #fff;
+    font-size: 14px;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 999;
+}
+
+footer p {
+    margin: 10px 0;
+}
+
+footer i {
+    color: red;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}

@@ -1,0 +1,25 @@
+# 日志配置
+logging:
+  level:
+    run.sage.shark: info
+    org.springframework: info
+
+spring:
+  rabbitmq:
+    host: 1.1.1.1
+    port: 6002
+    username: sage
+    password: '!EVk@vSZSx9S'
+    virtual-host: /
+
+  data:
+    mongodb:
+      host: 1.1.1.1
+      port: 6001
+      username: sage
+      password: '!EVk@vSZSx9S'
+      database: shark_proxy
+      auto-index-creation: true
+
+  thymeleaf:
+    cache: false

@@ -1,0 +1,13 @@
+check:
+  http-url: http://www.baidu.com
+  https-url: https://www.baidu.com
+  anonymous-url: http://httpbin.org/get
+  thread: 100
+  timeout: 5
+
+rabbitmq:
+  host: 1.1.1.1
+  port: 6002
+  username: sage
+  password: !EVk@vSZSx9S
+  virtual-host: /
