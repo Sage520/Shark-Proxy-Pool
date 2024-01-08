@@ -1,4 +1,4 @@
-package run.sage.shark.project.schedule;
+package run.sage.shark.project.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;

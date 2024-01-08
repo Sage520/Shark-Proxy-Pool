@@ -3,9 +3,9 @@ package run.sage.shark.project.service.impl;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import run.sage.shark.common.constant.RabbitConstants;
-import run.sage.shark.project.entity.to.ProxyCheckTo;
-import run.sage.shark.project.entity.to.ProxyGetRegionTo;
-import run.sage.shark.project.entity.to.ProxyUpdateTo;
+import run.sage.shark.project.mq.to.ProxyCheckTo;
+import run.sage.shark.project.mq.to.ProxyGetRegionTo;
+import run.sage.shark.project.mq.to.ProxyUpdateTo;
 import run.sage.shark.project.service.RabbitService;
 
 import javax.annotation.Resource;

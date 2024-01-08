@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import run.sage.shark.common.enums.ProxyEnum;
 import run.sage.shark.framework.notice.NoticeService;
 import run.sage.shark.project.entity.Proxy;
-import run.sage.shark.project.entity.vo.DailyReportVo;
+import run.sage.shark.project.controller.vo.report.DailyReportVo;
 import run.sage.shark.project.service.ProxyService;
 import run.sage.shark.project.service.ReportService;
 import run.sage.shark.project.service.ScheduleService;

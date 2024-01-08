@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import run.sage.shark.project.entity.to.FetchLogAddTo;
+import run.sage.shark.project.mq.to.FetchLogAddTo;
 import run.sage.shark.project.service.FetchLogService;
 
 import javax.annotation.Resource;

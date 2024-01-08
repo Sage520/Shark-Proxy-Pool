@@ -1,4 +1,4 @@
-package run.sage.shark.project.entity.vo.api;
+package run.sage.shark.project.controller.vo.api;
 
 import lombok.Data;
 import run.sage.shark.common.enums.ProxyEnum;

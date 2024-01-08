@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import run.sage.shark.common.constant.RabbitConstants;
-import run.sage.shark.project.entity.to.FetchLogAddTo;
+import run.sage.shark.project.mq.to.FetchLogAddTo;
 
 import javax.annotation.Resource;
 

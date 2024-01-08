@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import run.sage.shark.common.enums.ProxyEnum;
 import run.sage.shark.framework.notice.NoticeService;
-import run.sage.shark.project.entity.vo.DailyReportVo;
+import run.sage.shark.project.controller.vo.report.DailyReportVo;
 import run.sage.shark.project.service.ReportService;
 
 import javax.annotation.Resource;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import run.sage.shark.common.web.AjaxResult;
 import run.sage.shark.framework.rateLimiter.LimitType;
 import run.sage.shark.framework.rateLimiter.RateLimiter;
-import run.sage.shark.project.entity.vo.api.GetProxyDto;
+import run.sage.shark.project.controller.dto.GetProxyDto;
 import run.sage.shark.project.service.ProxyService;
 
 

@@ -1,13 +1,13 @@
 package run.sage.shark.project.service;
 
 import run.sage.shark.project.entity.Proxy;
-import run.sage.shark.project.entity.to.ProxyAddTo;
-import run.sage.shark.project.entity.to.ProxyGetRegionTo;
-import run.sage.shark.project.entity.to.ProxyUpdateTo;
-import run.sage.shark.project.entity.vo.CountProxyVo;
-import run.sage.shark.project.entity.vo.api.GetProxyDto;
-import run.sage.shark.project.entity.vo.api.GetProxyVo;
-import run.sage.shark.project.entity.vo.page.IndexPageVo;
+import run.sage.shark.project.mq.to.ProxyAddTo;
+import run.sage.shark.project.mq.to.ProxyGetRegionTo;
+import run.sage.shark.project.mq.to.ProxyUpdateTo;
+import run.sage.shark.project.controller.vo.page.CountProxyVo;
+import run.sage.shark.project.controller.dto.GetProxyDto;
+import run.sage.shark.project.controller.vo.api.GetProxyVo;
+import run.sage.shark.project.controller.vo.page.IndexPageVo;
 
 import java.util.List;
 

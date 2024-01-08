@@ -1,8 +1,8 @@
 package run.sage.shark.project.service;
 
-import run.sage.shark.project.entity.to.ProxyCheckTo;
-import run.sage.shark.project.entity.to.ProxyGetRegionTo;
-import run.sage.shark.project.entity.to.ProxyUpdateTo;
+import run.sage.shark.project.mq.to.ProxyCheckTo;
+import run.sage.shark.project.mq.to.ProxyGetRegionTo;
+import run.sage.shark.project.mq.to.ProxyUpdateTo;
 
 import java.util.List;
 

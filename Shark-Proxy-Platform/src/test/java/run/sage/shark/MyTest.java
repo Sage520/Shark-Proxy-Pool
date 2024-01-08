@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import run.sage.shark.common.enums.ProxyEnum;
 import run.sage.shark.common.utils.RegionUtils;
 import run.sage.shark.project.entity.Proxy;
-import run.sage.shark.project.entity.to.ProxyUpdateTo;
+import run.sage.shark.project.mq.to.ProxyUpdateTo;
 import run.sage.shark.project.repository.ProxyRepository;
 import run.sage.shark.project.service.ProxyService;
 import run.sage.shark.project.service.RabbitService;

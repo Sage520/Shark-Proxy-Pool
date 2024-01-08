@@ -1,4 +1,4 @@
-package run.sage.shark.project.entity.vo.api;
+package run.sage.shark.project.controller.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,8 +11,8 @@ import run.sage.shark.project.entity.Proxy;
  * @author Sage
  * @date 2023/04/27
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class GetProxyDto extends Proxy {
 
     /**

@@ -4,8 +4,8 @@ import com.google.common.cache.LoadingCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import run.sage.shark.project.entity.vo.CountProxyVo;
-import run.sage.shark.project.entity.vo.page.IndexPageVo;
+import run.sage.shark.project.controller.vo.page.CountProxyVo;
+import run.sage.shark.project.controller.vo.page.IndexPageVo;
 
 import java.util.concurrent.ExecutionException;
 

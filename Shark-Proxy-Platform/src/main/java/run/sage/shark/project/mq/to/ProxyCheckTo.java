@@ -1,4 +1,4 @@
-package run.sage.shark.project.entity.to;
+package run.sage.shark.project.mq.to;
 
 import lombok.Data;
 

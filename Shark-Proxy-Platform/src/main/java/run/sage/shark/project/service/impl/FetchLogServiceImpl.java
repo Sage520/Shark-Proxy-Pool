@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import run.sage.shark.project.entity.FetchLog;
-import run.sage.shark.project.entity.to.FetchLogAddTo;
+import run.sage.shark.project.mq.to.FetchLogAddTo;
 import run.sage.shark.project.repository.FetchLogRepository;
 import run.sage.shark.project.service.FetchLogService;
 

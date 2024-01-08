@@ -1,6 +1,6 @@
 package run.sage.shark.project.service;
 
-import run.sage.shark.project.entity.vo.DailyReportVo;
+import run.sage.shark.project.controller.vo.report.DailyReportVo;
 
 /**
  * 报表服务

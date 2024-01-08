@@ -6,8 +6,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import run.sage.shark.common.constant.RabbitConstants;
-import run.sage.shark.project.entity.to.ProxyAddTo;
-import run.sage.shark.project.entity.to.ProxyUpdateTo;
+import run.sage.shark.project.mq.to.ProxyAddTo;
+import run.sage.shark.project.mq.to.ProxyUpdateTo;
 import run.sage.shark.project.service.ProxyService;
 
 /**

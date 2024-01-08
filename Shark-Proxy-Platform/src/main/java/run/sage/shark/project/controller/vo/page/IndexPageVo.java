@@ -1,4 +1,4 @@
-package run.sage.shark.project.entity.vo.page;
+package run.sage.shark.project.controller.vo.page;
 
 import lombok.Data;
 

@@ -5,7 +5,7 @@ import run.sage.shark.common.enums.ProxyEnum;
 import run.sage.shark.project.repository.ProxyRepository;
 import run.sage.shark.project.service.ProxyService;
 import run.sage.shark.project.service.ReportService;
-import run.sage.shark.project.entity.vo.DailyReportVo;
+import run.sage.shark.project.controller.vo.report.DailyReportVo;
 
 import javax.annotation.Resource;
 import java.util.HashMap;

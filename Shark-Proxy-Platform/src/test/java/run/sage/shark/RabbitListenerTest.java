@@ -5,10 +5,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import run.sage.shark.common.enums.ProxyEnum;
-import run.sage.shark.project.entity.to.FetchLogAddTo;
-import run.sage.shark.project.entity.to.ProxyAddTo;
-import run.sage.shark.project.entity.to.ProxyGetRegionTo;
-import run.sage.shark.project.entity.to.ProxyUpdateTo;
+import run.sage.shark.project.mq.to.FetchLogAddTo;
+import run.sage.shark.project.mq.to.ProxyAddTo;
+import run.sage.shark.project.mq.to.ProxyGetRegionTo;
+import run.sage.shark.project.mq.to.ProxyUpdateTo;
 import run.sage.shark.project.service.FetchLogService;
 import run.sage.shark.project.service.ProxyService;
 

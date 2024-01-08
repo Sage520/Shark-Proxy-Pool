@@ -1,6 +1,6 @@
 package run.sage.shark.project.service;
 
-import run.sage.shark.project.entity.to.FetchLogAddTo;
+import run.sage.shark.project.mq.to.FetchLogAddTo;
 
 /**
  * 抓取日志服务
