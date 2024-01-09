@@ -57,11 +57,6 @@ public class MyTest {
     }
 
     @Test
-    public void checkProxySchedule() throws Exception {
-        scheduleService.cleanProxy();
-    }
-
-    @Test
     public void dailyReportSchedule() throws Exception {
         scheduleService.dailyReport();
     }

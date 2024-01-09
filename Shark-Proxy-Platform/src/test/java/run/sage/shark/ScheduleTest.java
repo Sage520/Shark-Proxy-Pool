@@ -20,9 +20,4 @@ public class ScheduleTest {
         scheduleService.checkProxy();
     }
 
-    @Test
-    public void cleanProxy() {
-        scheduleService.cleanProxy();
-    }
-
 }

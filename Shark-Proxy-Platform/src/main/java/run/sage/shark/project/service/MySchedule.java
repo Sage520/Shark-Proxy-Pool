@@ -26,14 +26,6 @@ public class MySchedule {
     }
 
     /**
-     * 每天凌晨2点 清理代理
-     */
-    @Scheduled(cron = "0 0 2 * * ?")
-    private void cleanProxy() {
-        scheduleService.cleanProxy();
-    }
-
-    /**
      * 每天早上10点 发送日报
      */
     @Scheduled(cron = "0 0 10 * * ?")

@@ -54,19 +54,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void cleanProxy() {
-        // 创建10天以上，存活率小于30%
-        DateTime dateTime1 = DateUtil.offsetDay(new Date(), -10);
-        Query query1 = new Query(Criteria.where("createTime").lte(dateTime1.getTime()).and("survivalRate").lt(30));
-        mongoTemplate.remove(query1, Proxy.class);
-
-        // 创建10天以上，存活率等于null
-        DateTime dateTime2 = DateUtil.offsetDay(new Date(), -10);
-        Query query2 = new Query(Criteria.where("createTime").lte(dateTime2.getTime()).and("survivalRate").is(null));
-        mongoTemplate.remove(query2, Proxy.class);
-    }
-
-    @Override
     public void dailyReport() {
         String title = "[Shark-Proxy]: 日报";
 
