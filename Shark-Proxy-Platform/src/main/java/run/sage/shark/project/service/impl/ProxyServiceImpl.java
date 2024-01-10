@@ -118,9 +118,6 @@ public class ProxyServiceImpl implements ProxyService {
                         getRegionInfo(getRegionTo);
                     }
 
-                    // 存活率
-                    Proxy proxyEntity = proxyRepository.findCountByIpAndPort(proxy.getIp(), proxy.getPort());
-                    update.set("survivalRate", calculationOfSurvival(proxyEntity.getCheckCount(), proxyEntity.getTimeoutCount()));
                     update.set("respTime", RespTimeDecimalFormat.format(proxy.getRespTime()));
                 }
             }
@@ -129,7 +126,19 @@ public class ProxyServiceImpl implements ProxyService {
             update.set("updateTime", System.currentTimeMillis());
             update.inc("checkCount", 1);
 
-            mongoTemplate.updateFirst(query, update, Proxy.class);
+            // 存活率
+            Proxy proxyEntity = proxyRepository.findCountByIpAndPort(proxy.getIp(), proxy.getPort());
+            Integer survivalRate = calculationOfSurvival(proxyEntity.getCheckCount(), proxyEntity.getTimeoutCount());
+            update.set("survivalRate", survivalRate);
+
+            // 判断代理是否需要清理
+            DateTime dateTime = DateUtil.offsetDay(new Date(), -10);
+            if (survivalRate < 30 && proxyEntity.getCreateTime() <= dateTime.getTime()) {
+                // 创建超过10天，存活率低于30
+                proxyRepository.deleteByIpAndPort(proxy.getIp(), proxy.getPort());
+            } else {
+                mongoTemplate.updateFirst(query, update, Proxy.class);
+            }
         }
     }
 

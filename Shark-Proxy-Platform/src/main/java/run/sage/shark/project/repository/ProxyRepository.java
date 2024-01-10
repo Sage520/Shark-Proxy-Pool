@@ -19,7 +19,7 @@ public interface ProxyRepository extends MongoRepository<Proxy, String> {
      * @param port 港口
      * @return {@link Proxy}
      */
-    @Query(fields = "{checkCount: 1, timeoutCount: 1}")
+    @Query(fields = "{checkCount: 1, timeoutCount: 1, createTime: 1}")
     Proxy findCountByIpAndPort(String ip, String port);
 
     /**
@@ -38,5 +38,13 @@ public interface ProxyRepository extends MongoRepository<Proxy, String> {
      * @return {@link long}
      */
     long countByTypeAndStatus(Integer type, Integer status);
+
+    /**
+     * 删除指定代理
+     *
+     * @param ip
+     * @param port
+     */
+    void deleteByIpAndPort(String ip, String port);
 
 }
