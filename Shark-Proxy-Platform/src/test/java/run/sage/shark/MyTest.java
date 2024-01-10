@@ -57,16 +57,6 @@ public class MyTest {
     }
 
     @Test
-    public void dailyReportSchedule() throws Exception {
-        scheduleService.dailyReport();
-    }
-
-    @Test
-    public void dailyClean() throws Exception {
-        scheduleService.dailyReport();
-    }
-
-    @Test
     public void test333() throws Exception {
         DateTime dateTime = DateUtil.offsetHour(new Date(), -6);
         Query query1 = new Query(Criteria.where("lastCheckTime").lte(dateTime));

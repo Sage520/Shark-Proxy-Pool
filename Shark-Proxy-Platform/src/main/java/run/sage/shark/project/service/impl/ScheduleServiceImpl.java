@@ -9,12 +9,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import run.sage.shark.common.enums.ProxyEnum;
-import run.sage.shark.framework.notice.NoticeService;
 import run.sage.shark.project.entity.Proxy;
-import run.sage.shark.project.controller.vo.report.DailyReportVo;
 import run.sage.shark.project.service.ProxyService;
-import run.sage.shark.project.service.ReportService;
 import run.sage.shark.project.service.ScheduleService;
 
 import java.util.Date;
@@ -35,10 +31,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private final ProxyService proxyService;
 
-    private final ReportService reportService;
-
-    private final NoticeService noticeService;
-
     @Override
     public void checkProxy() {
         // 距离上次检测超过6小时
@@ -51,21 +43,5 @@ public class ScheduleServiceImpl implements ScheduleService {
         for (Proxy proxy : proxyList) {
             proxyService.checkProxy(proxy, ObjectUtil.isNull(proxy.getType()));
         }
-    }
-
-    @Override
-    public void dailyReport() {
-        String title = "[Shark-Proxy]: 日报";
-
-        DailyReportVo dailyReportVo = reportService.dailyReport();
-        String text = String.format(
-                "当前总代理数：{}\n当前总存活代理数：{}\n当前总超时代理数：{}\n昨日新增代理数：{}\n",
-                dailyReportVo.getTotal(),
-                dailyReportVo.getStatusCount().get(ProxyEnum.Status.SURVIVE.getName()),
-                dailyReportVo.getStatusCount().get(ProxyEnum.Status.TIME_OUT.getName()),
-                dailyReportVo.getYesterdayAdd()
-                );
-
-        noticeService.sendMessage(title, text);
     }
 }

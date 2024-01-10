@@ -13,9 +13,4 @@ public interface ScheduleService {
      */
     void checkProxy();
 
-    /**
-     * 每日报告
-     */
-    void dailyReport();
-
 }
