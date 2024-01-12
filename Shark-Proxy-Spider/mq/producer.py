@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pika
+import json
 from mq.basic import get_parameters, ProxyAddTo
 
 connection = pika.BlockingConnection(get_parameters())
@@ -18,4 +19,4 @@ def send_to_add_queue(proxy: str):
         proxy_info = proxy.split(':')
         if len(proxy_info) == 4:
             to = ProxyAddTo(proxy_info[0], proxy_info[1], proxy_info[2], proxy_info[3])
-            publish_message("proxy-event-exchange", "proxy.add", to)
+            publish_message("proxy-event-exchange", "proxy.add", json.dumps(to.__json__()))

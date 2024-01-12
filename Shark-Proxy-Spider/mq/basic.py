@@ -12,6 +12,14 @@ class ProxyAddTo:
         self.type = type
         self.source = source
 
+    def __json__(self):
+        return {
+            'ip': self.ip,
+            'port': self.port,
+            'type': self.type,
+            'source': self.source,
+        }
+
 
 # RabbitMQ 服务器的连接参数
 def get_parameters():
