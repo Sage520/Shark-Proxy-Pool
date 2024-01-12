@@ -1,11 +1,8 @@
-from mq.basic import ProxyAddTo
+# -*- coding: utf-8 -*-
+
 from mq.producer import send_to_add_queue
+from fetcher.fetcher import ProxyFetcher
 
 if __name__ == '__main__':
-    to = ProxyAddTo()
-    to.ip = '1.1.1.1'
-    to.port = 80
-    to.source = 'test'
-    to.type = 1
-
-    send_to_add_queue(to)
+    for i in ProxyFetcher.common():
+        send_to_add_queue(i)

@@ -6,11 +6,11 @@ import config
 
 # 新增代理TO
 class ProxyAddTo:
-    def __init__(self):
-        self.ip = None
-        self.port = None
-        self.source = None
-        self.type = None
+    def __init__(self, ip, port, type, source):
+        self.ip = ip
+        self.port = port
+        self.type = type
+        self.source = source
 
 
 # RabbitMQ 服务器的连接参数
