@@ -53,7 +53,6 @@ public class RabbitListenerTest {
     public void proxyRegion() throws Exception {
         ProxyGetRegionTo proxyGetRegionTo = new ProxyGetRegionTo();
         proxyGetRegionTo.setIp("1.1.1.1");
-        proxyGetRegionTo.setPort("80");
 
         proxyService.getRegionInfo(proxyGetRegionTo);
     }

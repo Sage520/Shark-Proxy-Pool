@@ -49,7 +49,7 @@ public class ProxyEventListener {
         try {
             proxyService.updateProxy(proxy);
         } catch (Exception e) {
-            log.error("代理更新队列消费出错: {}", e.getMessage());
+            log.error("代理更新队列消费出错: ", e);
         }
     }
 }

@@ -114,8 +114,9 @@ public class ProxyServiceImpl implements ProxyService {
                         // 地区信息
                         ProxyGetRegionTo getRegionTo = new ProxyGetRegionTo();
                         getRegionTo.setIp(proxy.getIp());
-                        getRegionTo.setPort(proxy.getPort());
                         getRegionInfo(getRegionTo);
+                        update.set("country", getRegionTo.getCountry());
+                        update.set("province", getRegionTo.getProvince());
                     }
 
                     update.set("respTime", RespTimeDecimalFormat.format(proxy.getRespTime()));
@@ -157,8 +158,6 @@ public class ProxyServiceImpl implements ProxyService {
     @Override
     public void getRegionInfo(ProxyGetRegionTo proxy) {
         log.info("获取代理地区信息, IP: {}", proxy.getIp());
-        Query query = new Query(Criteria.where("ip").is(proxy.getIp()).and("port").is(proxy.getPort()));
-        Update update = new Update();
 
         // 国家等信息补充
         String ipInfo = RegionUtils.getRegionInfo(proxy.getIp());
@@ -168,17 +167,14 @@ public class ProxyServiceImpl implements ProxyService {
             String province = ipInfoArr[2];
 
             if (!Constants.REGION_NULL.equals(country)) {
-                update.set("country", country);
+                proxy.setCountry(country);
             }
             if (Constants.REGION_CHINA.equals(country)) {
                 if (!Constants.REGION_NULL.equals(province)) {
-                    update.set("province", province);
+                    proxy.setProvince(province);
                 }
             }
         }
-        update.set("updateTime", System.currentTimeMillis());
-
-        mongoTemplate.updateFirst(query, update, Proxy.class);
     }
 
     @Override

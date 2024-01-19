@@ -17,8 +17,13 @@ public class ProxyGetRegionTo {
     private String ip;
 
     /**
-     * 端口
+     * 国家
      */
-    private String port;
+    private String country;
+
+    /**
+     * 省 (只限国内)
+     */
+    private String province;
 
 }
