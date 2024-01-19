@@ -35,7 +35,7 @@ public class ProxyEventListener {
         } catch (DuplicateKeyException e) {
             log.info("代理新增重复");
         } catch (Exception e) {
-            log.error("代理新增队列消费出错: {}", e.getMessage());
+            log.error("代理新增队列消费出错: ", e);
         }
     }
 

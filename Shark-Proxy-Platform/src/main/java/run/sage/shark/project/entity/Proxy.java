@@ -79,12 +79,12 @@ public class Proxy extends BaseEntity {
     /**
      * 校验统计
      */
-    private Integer checkCount = 0;
+    private Integer checkCount;
 
     /**
      * 超时统计
      */
-    private Integer timeoutCount = 0;
+    private Integer timeoutCount;
 
     /**
      * 存活率

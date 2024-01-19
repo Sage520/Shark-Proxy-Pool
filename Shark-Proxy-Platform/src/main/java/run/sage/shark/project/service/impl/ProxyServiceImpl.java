@@ -68,14 +68,14 @@ public class ProxyServiceImpl implements ProxyService {
         if (ObjectUtil.isNotNull(proxy)
                 && StrUtil.isNotBlank(proxy.getIp())
                 && StrUtil.isNotBlank(proxy.getPort())
-                && StrUtil.isNotBlank(proxy.getSource())) {
+                && StrUtil.isNotBlank(proxy.getSource())
+                && ProxyEnum.Type.codeVerify(proxy.getType())) {
+
             Proxy addProxy = new Proxy();
-            addProxy.setIp(proxy.getIp());
-            addProxy.setPort(proxy.getPort());
-            addProxy.setSource(proxy.getSource());
-            if (ProxyEnum.Type.codeVerify(proxy.getType())) {
-                addProxy.setType(proxy.getType());
-            }
+            addProxy.setCheckCount(0);
+            addProxy.setTimeoutCount(0);
+            addProxy.setSurvivalRate(0);
+            BeanUtil.copyProperties(proxy, addProxy);
 
             // 直接新增，依靠唯一索引去重
             proxyRepository.save(addProxy);
@@ -128,7 +128,7 @@ public class ProxyServiceImpl implements ProxyService {
 
             // 存活率
             Proxy proxyEntity = proxyRepository.findCountByIpAndPort(proxy.getIp(), proxy.getPort());
-            Integer survivalRate = calculationOfSurvival(proxyEntity.getCheckCount(), proxyEntity.getTimeoutCount());
+            Integer survivalRate = calculationOfSurvival(proxyEntity.getCheckCount() + 1, proxyEntity.getTimeoutCount() + 1);
             update.set("survivalRate", survivalRate);
 
             // 判断代理是否需要清理
