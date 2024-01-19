@@ -92,6 +92,7 @@ public class ProxyServiceImpl implements ProxyService {
         if (ObjectUtil.isNotNull(proxy) && StrUtil.isNotBlank(proxy.getIp()) && StrUtil.isNotBlank(proxy.getPort())) {
             Query query = new Query(Criteria.where("ip").is(proxy.getIp()).and("port").is(proxy.getPort()));
             Update update = new Update();
+            int timeoutCount = 0;
 
             if (ProxyEnum.Status.codeVerify(proxy.getStatus())) {
                 update.set("status", proxy.getStatus());
@@ -100,6 +101,7 @@ public class ProxyServiceImpl implements ProxyService {
                 if (ProxyEnum.Status.TIME_OUT.getCode().equals(proxy.getStatus())) {
                     update.set("respTime", "0");
                     update.inc("timeoutCount", 1);
+                    timeoutCount = 1;
                 }
                 if (ProxyEnum.Status.SURVIVE.getCode().equals(proxy.getStatus())) {
                     // 新加入代理的首次校验
@@ -129,7 +131,7 @@ public class ProxyServiceImpl implements ProxyService {
 
             // 存活率
             Proxy proxyEntity = proxyRepository.findCountByIpAndPort(proxy.getIp(), proxy.getPort());
-            Integer survivalRate = calculationOfSurvival(proxyEntity.getCheckCount() + 1, proxyEntity.getTimeoutCount() + 1);
+            Integer survivalRate = calculationOfSurvival(proxyEntity.getCheckCount() + 1, proxyEntity.getTimeoutCount() + timeoutCount);
             update.set("survivalRate", survivalRate);
 
             // 判断代理是否需要清理
@@ -150,7 +152,7 @@ public class ProxyServiceImpl implements ProxyService {
      * @param timeoutCount 超时统计
      * @return {@link Integer}
      */
-    private Integer calculationOfSurvival(Integer checkCount, Integer timeoutCount) {
+    public Integer calculationOfSurvival(Integer checkCount, Integer timeoutCount) {
         long survivalRate = Math.round(((double) timeoutCount / checkCount) * 100);
         return (100 - Long.valueOf(survivalRate).intValue());
     }
