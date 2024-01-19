@@ -1,7 +1,6 @@
 package run.sage.shark.project.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -23,12 +22,12 @@ import run.sage.shark.common.exception.base.BaseException;
 import run.sage.shark.common.utils.RegionUtils;
 import run.sage.shark.common.web.AjaxResult;
 import run.sage.shark.framework.config.RespTimeDecimalFormat;
-import run.sage.shark.project.entity.Proxy;
-import run.sage.shark.project.controller.vo.page.CountProxyVo;
 import run.sage.shark.project.controller.dto.GetProxyDto;
 import run.sage.shark.project.controller.vo.api.GetProxyVo;
+import run.sage.shark.project.controller.vo.page.CountProxyVo;
 import run.sage.shark.project.controller.vo.page.IndexPageItemVo;
 import run.sage.shark.project.controller.vo.page.IndexPageVo;
+import run.sage.shark.project.entity.Proxy;
 import run.sage.shark.project.mq.to.ProxyAddTo;
 import run.sage.shark.project.mq.to.ProxyCheckTo;
 import run.sage.shark.project.mq.to.ProxyGetRegionTo;
@@ -81,7 +80,9 @@ public class ProxyServiceImpl implements ProxyService {
             proxyRepository.save(addProxy);
 
             // 新增代理立即投入验证队列
-            this.checkProxy(addProxy, Boolean.TRUE);
+            ProxyCheckTo to = new ProxyCheckTo();
+            BeanUtil.copyProperties(proxy, to);
+            this.checkProxy(to);
         }
     }
 
@@ -141,6 +142,10 @@ public class ProxyServiceImpl implements ProxyService {
                 proxyRepository.deleteByIpAndPort(proxy.getIp(), proxy.getPort());
             } else {
                 mongoTemplate.updateFirst(query, update, Proxy.class);
+
+                ProxyCheckTo to = new ProxyCheckTo();
+                BeanUtil.copyProperties(proxy, to);
+                this.checkProxyDelay(to);
             }
         }
     }
@@ -283,24 +288,15 @@ public class ProxyServiceImpl implements ProxyService {
     }
 
     @Override
-    public void checkProxy(List<Proxy> proxies, Boolean firstCheck) {
-        if (CollectionUtil.isNotEmpty(proxies)) {
-            proxies.forEach(item -> this.checkProxy(item, firstCheck));
-        }
+    public void checkProxy(ProxyCheckTo proxyCheckTo) {
+        proxyCheckTo.setFirstCheck(Boolean.TRUE);
+        rabbitService.sendProxyToCheckQueue(proxyCheckTo);
     }
 
     @Override
-    public void checkProxy(Proxy proxy, Boolean firstCheck) {
-        ProxyCheckTo to = new ProxyCheckTo();
-
-        to.setIp(proxy.getIp());
-        to.setPort(proxy.getPort());
-        if (ProxyEnum.Type.codeVerify(proxy.getType())) {
-            to.setType(proxy.getType());
-        }
-        to.setFirstCheck(firstCheck);
-
-        rabbitService.sendProxyToCheckQueue(to);
+    public void checkProxyDelay(ProxyCheckTo proxyCheckTo) {
+        proxyCheckTo.setFirstCheck(Boolean.FALSE);
+        rabbitService.sendProxyToNextCheckQueue(proxyCheckTo);
     }
 
     @Override

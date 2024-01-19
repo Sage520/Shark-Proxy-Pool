@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import run.sage.shark.common.constant.RabbitConstants;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * MQ配置
  *
@@ -64,14 +62,6 @@ public class RabbitConfig {
      */
     @Bean
     public Binding proxyAddBinding(Queue proxyAddQueue, Exchange proxyEventExchange) {
-        /*
-         * String destination, 目的地（队列名或者交换机名字）
-         * DestinationType destinationType, 目的地类型（Queue、Exhcange）
-         * String exchange,
-         * String routingKey,
-         * Map<String, Object> arguments
-         * */
-
         return BindingBuilder
                 .bind(proxyAddQueue)
                 .to(proxyEventExchange)
@@ -100,14 +90,6 @@ public class RabbitConfig {
      */
     @Bean
     public Binding proxyUpdateBinding(Queue proxyUpdateQueue, Exchange proxyEventExchange) {
-        /*
-         * String destination, 目的地（队列名或者交换机名字）
-         * DestinationType destinationType, 目的地类型（Queue、Exhcange）
-         * String exchange,
-         * String routingKey,
-         * Map<String, Object> arguments
-         * */
-
         return BindingBuilder
                 .bind(proxyUpdateQueue)
                 .to(proxyEventExchange)
@@ -124,10 +106,6 @@ public class RabbitConfig {
     public Queue proxyCheckQueue() {
         return QueueBuilder
                 .durable(RabbitConstants.MQ_PROXY_CHECK_QUEUE)
-                // 为检测队列设置超时时间，时间设定为6h，这里跟定时检测时间同步
-                // 1 防止消费者消费能力不足，校验信息不重要，可丢弃
-                // 2 防止消费者宕机，一次积压太多重复的数据
-                .withArgument("x-message-ttl", TimeUnit.MINUTES.toMillis(5))
                 .build();
     }
 
@@ -140,14 +118,6 @@ public class RabbitConfig {
      */
     @Bean
     public Binding proxyCheckBinding(Queue proxyCheckQueue, Exchange proxyEventExchange) {
-        /*
-         * String destination, 目的地（队列名或者交换机名字）
-         * DestinationType destinationType, 目的地类型（Queue、Exhcange）
-         * String exchange,
-         * String routingKey,
-         * Map<String, Object> arguments
-         * */
-
         return BindingBuilder
                 .bind(proxyCheckQueue)
                 .to(proxyEventExchange)
@@ -189,18 +159,53 @@ public class RabbitConfig {
      */
     @Bean
     public Binding fetchLogAddBinding(Queue fetchLogAddQueue, Exchange fetchLogEventExchange) {
-        /*
-         * String destination, 目的地（队列名或者交换机名字）
-         * DestinationType destinationType, 目的地类型（Queue、Exhcange）
-         * String exchange,
-         * String routingKey,
-         * Map<String, Object> arguments
-         * */
-
         return BindingBuilder
                 .bind(fetchLogAddQueue)
                 .to(fetchLogEventExchange)
                 .with(RabbitConstants.MQ_FETCH_LOG_ADD_QUEUE_KEY)
+                .noargs();
+    }
+
+    /**
+     * 死信事件交换机
+     *
+     * @return {@link Exchange}
+     */
+    @Bean
+    public Exchange deadEventExchange() {
+        return ExchangeBuilder
+                .topicExchange(RabbitConstants.MQ_DEAD_EXCHANGE)
+                .withArgument("x-dead-letter-exchange", RabbitConstants.MQ_PROXY_EXCHANGE)
+                .withArgument("x-dead-letter-routing-key", RabbitConstants.MQ_PROXY_CHECK_QUEUE_KEY)
+                .durable(true)
+                .build();
+    }
+
+    /**
+     * 死信代理队列
+     *
+     * @return {@link Queue}
+     */
+    @Bean
+    public Queue deadProxyQueue() {
+        return QueueBuilder
+                .durable(RabbitConstants.MQ_DEAD_PROXY_QUEUE)
+                .build();
+    }
+
+    /**
+     * 死信代理队列绑定
+     *
+     * @param deadProxyQueue      死信代理队列
+     * @param deadEventExchange 死信事件交换机
+     * @return {@link Binding}
+     */
+    @Bean
+    public Binding deadProxyBinding(Queue deadProxyQueue, Exchange deadEventExchange) {
+        return BindingBuilder
+                .bind(deadProxyQueue)
+                .to(deadEventExchange)
+                .with(RabbitConstants.MQ_DEAD_PROXY_QUEUE_KEY)
                 .noargs();
     }
 

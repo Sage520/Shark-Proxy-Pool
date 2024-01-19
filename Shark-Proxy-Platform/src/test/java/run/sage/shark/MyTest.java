@@ -17,7 +17,6 @@ import run.sage.shark.project.mq.to.ProxyUpdateTo;
 import run.sage.shark.project.repository.ProxyRepository;
 import run.sage.shark.project.service.ProxyService;
 import run.sage.shark.project.service.RabbitService;
-import run.sage.shark.project.service.ScheduleService;
 import sun.net.util.IPAddressUtil;
 
 import javax.annotation.Resource;
@@ -41,9 +40,6 @@ public class MyTest {
 
     @Resource
     private ProxyRepository proxyRepository;
-
-    @Resource
-    private ScheduleService scheduleService;
 
     @Test
     public void test() throws Exception {
@@ -75,8 +71,6 @@ public class MyTest {
 
             return to;
         }).collect(Collectors.toList());
-
-        tos.forEach(rabbitService::sendProxyToUpdateQueue);
     }
 
     @Test

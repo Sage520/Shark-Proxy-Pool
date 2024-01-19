@@ -31,6 +31,6 @@ public class ProxyCheckTo implements Serializable {
     /**
      * 是否首次检测
      */
-    private Boolean firstCheck = Boolean.FALSE;
+    private Boolean firstCheck;
 
 }

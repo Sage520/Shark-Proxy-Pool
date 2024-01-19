@@ -1,15 +1,13 @@
 package run.sage.shark.project.service;
 
-import run.sage.shark.project.entity.Proxy;
-import run.sage.shark.project.mq.to.ProxyAddTo;
-import run.sage.shark.project.mq.to.ProxyGetRegionTo;
-import run.sage.shark.project.mq.to.ProxyUpdateTo;
-import run.sage.shark.project.controller.vo.page.CountProxyVo;
 import run.sage.shark.project.controller.dto.GetProxyDto;
 import run.sage.shark.project.controller.vo.api.GetProxyVo;
+import run.sage.shark.project.controller.vo.page.CountProxyVo;
 import run.sage.shark.project.controller.vo.page.IndexPageVo;
-
-import java.util.List;
+import run.sage.shark.project.mq.to.ProxyAddTo;
+import run.sage.shark.project.mq.to.ProxyCheckTo;
+import run.sage.shark.project.mq.to.ProxyGetRegionTo;
+import run.sage.shark.project.mq.to.ProxyUpdateTo;
 
 /**
  * 代理服务
@@ -58,18 +56,16 @@ public interface ProxyService {
     /**
      * 验证代理
      *
-     * @param proxies    代理
-     * @param firstCheck 是否首次检测
+     * @param proxy 代理
      */
-    void checkProxy(List<Proxy> proxies, Boolean firstCheck);
+    void checkProxy(ProxyCheckTo proxyCheckTo);
 
     /**
-     * 验证代理
+     * 延迟验证代理
      *
-     * @param proxy    代理
-     * @param firstCheck 是否首次检测
+     * @param proxy 代理
      */
-    void checkProxy(Proxy proxy, Boolean firstCheck);
+    void checkProxyDelay(ProxyCheckTo proxyCheckTo);
 
     /**
      * 查询首页页面数据
