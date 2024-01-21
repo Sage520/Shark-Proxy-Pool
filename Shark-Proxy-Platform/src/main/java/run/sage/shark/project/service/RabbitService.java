@@ -36,7 +36,7 @@ public class RabbitService {
      * @param ttlTime 延迟时间(毫秒)
      */
     public void sendProxyToCheckQueue(ProxyCheckTo proxy, String ttlTime) {
-        rabbitTemplate.convertAndSend(RabbitConstants.MQ_DEAD_EXCHANGE, RabbitConstants.MQ_DEAD_PROXY_QUEUE_KEY, proxy, messagePostProcessor -> {
+        rabbitTemplate.convertAndSend(RabbitConstants.MQ_DELAY_EXCHANGE, RabbitConstants.MQ_DELAY_PROXY_QUEUE_KEY, proxy, messagePostProcessor -> {
             messagePostProcessor.getMessageProperties().setExpiration(ttlTime);
             return messagePostProcessor;
         });

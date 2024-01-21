@@ -29,6 +29,7 @@ public class RabbitListenerTest {
         ProxyAddTo proxyAddTo = new ProxyAddTo();
         proxyAddTo.setIp("1.1.1.1");
         proxyAddTo.setPort("80");
+        proxyAddTo.setType(1);
         proxyAddTo.setSource("test");
 
         proxyService.addProxy(proxyAddTo);

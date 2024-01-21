@@ -69,18 +69,18 @@ public class RabbitConstants {
     public static final String MQ_FETCH_LOG_ADD_QUEUE_KEY = "fetchLog.add";
 
     /**
-     * 死信事件交换机
+     * 延迟事件交换机
      */
-    public static final String MQ_DEAD_EXCHANGE = "dead-event-exchange";
+    public static final String MQ_DELAY_EXCHANGE = "delay-event-exchange";
 
     /**
-     * 死信代理队列
+     * 延迟代理队列
      */
-    public static final String MQ_DEAD_PROXY_QUEUE = "dead.proxy.queue";
+    public static final String MQ_DELAY_PROXY_QUEUE = "delay.proxy.queue";
 
     /**
-     * 死信代理 Key
+     * 延迟代理 Key
      */
-    public static final String MQ_DEAD_PROXY_QUEUE_KEY = "dead.proxy";
+    public static final String MQ_DELAY_PROXY_QUEUE_KEY = "delay.proxy";
 
 }
