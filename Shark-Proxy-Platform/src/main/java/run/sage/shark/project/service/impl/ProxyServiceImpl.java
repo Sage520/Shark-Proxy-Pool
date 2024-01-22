@@ -82,7 +82,7 @@ public class ProxyServiceImpl implements ProxyService {
             // 新增代理立即投入验证队列
             ProxyCheckTo to = new ProxyCheckTo();
             BeanUtil.copyProperties(proxy, to);
-            this.checkProxy(to);
+            this.checkProxy(to, true);
         }
     }
 
@@ -90,48 +90,53 @@ public class ProxyServiceImpl implements ProxyService {
     public void updateProxy(ProxyUpdateTo proxy) {
         log.info("更新代理, IP: {} Port: {}", proxy.getIp(), proxy.getPort());
 
-        if (ObjectUtil.isNotNull(proxy) && StrUtil.isNotBlank(proxy.getIp()) && StrUtil.isNotBlank(proxy.getPort())) {
+        if (ObjectUtil.isNotNull(proxy)
+                && StrUtil.isNotBlank(proxy.getIp())
+                && StrUtil.isNotBlank(proxy.getPort())) {
+
+            Proxy proxyEntity = proxyRepository.findUpdateProxyByIpAndPort(proxy.getIp(), proxy.getPort());
+            if (ObjectUtil.isNull(proxyEntity)) {
+                throw new BaseException("代理不存在");
+            }
+            if (!ProxyEnum.Status.codeVerify(proxy.getStatus())) {
+                throw new BaseException("代理状态错误");
+            }
+
             Query query = new Query(Criteria.where("ip").is(proxy.getIp()).and("port").is(proxy.getPort()));
             Update update = new Update();
             int timeoutCount = 0;
 
-            if (ProxyEnum.Status.codeVerify(proxy.getStatus())) {
-                update.set("status", proxy.getStatus());
 
-                // 设置响应时间
-                if (ProxyEnum.Status.TIME_OUT.getCode().equals(proxy.getStatus())) {
-                    update.set("respTime", "0");
-                    update.inc("timeoutCount", 1);
-                    timeoutCount = 1;
-                }
-                if (ProxyEnum.Status.SURVIVE.getCode().equals(proxy.getStatus())) {
-                    // 新加入代理的首次校验
-                    if (proxy.getFirstCheck()) {
-                        if (ProxyEnum.Type.codeVerify(proxy.getType()) && ProxyEnum.Anonymous.codeVerify(proxy.getAnonymous())) {
-                            update.set("type", proxy.getType());
-                            update.set("anonymous", proxy.getAnonymous());
-                        } else {
-                            throw new BaseException("代理存活但类型，匿名度字段不存在");
-                        }
-
-                        // 地区信息
-                        ProxyGetRegionTo getRegionTo = new ProxyGetRegionTo();
-                        getRegionTo.setIp(proxy.getIp());
-                        getRegionInfo(getRegionTo);
-                        update.set("country", getRegionTo.getCountry());
-                        update.set("province", getRegionTo.getProvince());
+            // 状态字段
+            if (ProxyEnum.Status.TIME_OUT.getCode().equals(proxy.getStatus())) {
+                update.set("respTime", "0");
+                update.inc("timeoutCount", 1);
+                timeoutCount = 1;
+            }
+            if (ProxyEnum.Status.SURVIVE.getCode().equals(proxy.getStatus())) {
+                // 新加入代理的首次校验
+                if (proxy.getFirstCheck()) {
+                    if (ProxyEnum.Anonymous.codeVerify(proxy.getAnonymous())) {
+                        update.set("anonymous", proxy.getAnonymous());
                     }
 
-                    update.set("respTime", RespTimeDecimalFormat.format(proxy.getRespTime()));
+                    // 地区信息
+                    ProxyGetRegionTo getRegionTo = new ProxyGetRegionTo();
+                    getRegionTo.setIp(proxy.getIp());
+                    getRegionInfo(getRegionTo);
+                    update.set("country", getRegionTo.getCountry());
+                    update.set("province", getRegionTo.getProvince());
                 }
+
+                update.set("respTime", RespTimeDecimalFormat.format(proxy.getRespTime()));
             }
 
+            update.set("status", proxy.getStatus());
             update.set("lastCheckTime", proxy.getLastCheckTime());
             update.set("updateTime", System.currentTimeMillis());
             update.inc("checkCount", 1);
 
             // 存活率
-            Proxy proxyEntity = proxyRepository.findCountByIpAndPort(proxy.getIp(), proxy.getPort());
             Integer survivalRate = calculationOfSurvival(proxyEntity.getCheckCount() + 1, proxyEntity.getTimeoutCount() + timeoutCount);
             update.set("survivalRate", survivalRate);
 
@@ -143,9 +148,10 @@ public class ProxyServiceImpl implements ProxyService {
             } else {
                 mongoTemplate.updateFirst(query, update, Proxy.class);
 
+                // 判断是否需要获取首次元数据信息，防止首次校验超时，后续存活
                 ProxyCheckTo to = new ProxyCheckTo();
                 BeanUtil.copyProperties(proxy, to);
-                this.checkProxyDelay(to);
+                this.checkProxyDelay(to, !ProxyEnum.Anonymous.codeVerify(proxyEntity.getAnonymous()));
             }
         }
     }
@@ -288,14 +294,14 @@ public class ProxyServiceImpl implements ProxyService {
     }
 
     @Override
-    public void checkProxy(ProxyCheckTo proxyCheckTo) {
-        proxyCheckTo.setFirstCheck(Boolean.TRUE);
+    public void checkProxy(ProxyCheckTo proxyCheckTo,  boolean firstCheck) {
+        proxyCheckTo.setFirstCheck(firstCheck);
         rabbitService.sendProxyToCheckQueue(proxyCheckTo);
     }
 
     @Override
-    public void checkProxyDelay(ProxyCheckTo proxyCheckTo) {
-        proxyCheckTo.setFirstCheck(Boolean.FALSE);
+    public void checkProxyDelay(ProxyCheckTo proxyCheckTo, boolean firstCheck) {
+        proxyCheckTo.setFirstCheck(firstCheck);
         rabbitService.sendProxyToNextCheckQueue(proxyCheckTo);
     }
 

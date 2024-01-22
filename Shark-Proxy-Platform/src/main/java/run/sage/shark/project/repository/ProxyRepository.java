@@ -13,14 +13,14 @@ import run.sage.shark.project.entity.Proxy;
 public interface ProxyRepository extends MongoRepository<Proxy, String> {
 
     /**
-     * 查询指定代理的超时次数和校验次数
+     * 查询更新代理需要指定信息
      *
      * @param ip   知识产权
      * @param port 港口
      * @return {@link Proxy}
      */
-    @Query(fields = "{checkCount: 1, timeoutCount: 1, createTime: 1}")
-    Proxy findCountByIpAndPort(String ip, String port);
+    @Query(fields = "{checkCount: 1, timeoutCount: 1, createTime: 1, anonymous: 1}")
+    Proxy findUpdateProxyByIpAndPort(String ip, String port);
 
     /**
      * 根据存活状态统计
@@ -42,8 +42,8 @@ public interface ProxyRepository extends MongoRepository<Proxy, String> {
     /**
      * 删除指定代理
      *
-     * @param ip
-     * @param port
+     * @param ip   知识产权
+     * @param port 港口
      */
     void deleteByIpAndPort(String ip, String port);
 

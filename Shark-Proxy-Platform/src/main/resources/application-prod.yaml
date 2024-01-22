@@ -1,8 +1,8 @@
 # 日志配置
 logging:
   level:
-    run.sage.shark: warn
-    org.springframework: warn
+    run.sage.shark: error
+    org.springframework: error
 
 spring:
   rabbitmq:

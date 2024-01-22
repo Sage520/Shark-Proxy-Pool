@@ -56,16 +56,18 @@ public interface ProxyService {
     /**
      * 验证代理
      *
-     * @param proxy 代理
+     * @param proxyCheckTo 代理
+     * @param firstCheck   是否首次校验
      */
-    void checkProxy(ProxyCheckTo proxyCheckTo);
+    void checkProxy(ProxyCheckTo proxyCheckTo, boolean firstCheck);
 
     /**
      * 延迟验证代理
      *
-     * @param proxy 代理
+     * @param proxyCheckTo 代理
+     * @param firstCheck   是否首次校验
      */
-    void checkProxyDelay(ProxyCheckTo proxyCheckTo);
+    void checkProxyDelay(ProxyCheckTo proxyCheckTo, boolean firstCheck);
 
     /**
      * 查询首页页面数据
