@@ -167,37 +167,37 @@ public class RabbitConfig {
     }
 
     /**
-     * 死信事件交换机
+     * 延迟事件交换机
      *
      * @return {@link Exchange}
      */
     @Bean
     public Exchange deadEventExchange() {
         return ExchangeBuilder
-                .topicExchange(RabbitConstants.MQ_DEAD_EXCHANGE)
-                .withArgument("x-dead-letter-exchange", RabbitConstants.MQ_PROXY_EXCHANGE)
-                .withArgument("x-dead-letter-routing-key", RabbitConstants.MQ_PROXY_CHECK_QUEUE_KEY)
+                .topicExchange(RabbitConstants.MQ_DELAY_EXCHANGE)
                 .durable(true)
                 .build();
     }
 
     /**
-     * 死信代理队列
+     * 延迟代理队列
      *
      * @return {@link Queue}
      */
     @Bean
     public Queue deadProxyQueue() {
         return QueueBuilder
-                .durable(RabbitConstants.MQ_DEAD_PROXY_QUEUE)
+                .durable(RabbitConstants.MQ_DELAY_PROXY_QUEUE)
+                .withArgument("x-dead-letter-exchange", RabbitConstants.MQ_PROXY_EXCHANGE)
+                .withArgument("x-dead-letter-routing-key", RabbitConstants.MQ_PROXY_CHECK_QUEUE_KEY)
                 .build();
     }
 
     /**
-     * 死信代理队列绑定
+     * 延迟代理队列绑定
      *
-     * @param deadProxyQueue      死信代理队列
-     * @param deadEventExchange 死信事件交换机
+     * @param deadProxyQueue      延迟代理队列
+     * @param deadEventExchange 延迟事件交换机
      * @return {@link Binding}
      */
     @Bean
@@ -205,7 +205,7 @@ public class RabbitConfig {
         return BindingBuilder
                 .bind(deadProxyQueue)
                 .to(deadEventExchange)
-                .with(RabbitConstants.MQ_DEAD_PROXY_QUEUE_KEY)
+                .with(RabbitConstants.MQ_DELAY_PROXY_QUEUE_KEY)
                 .noargs();
     }
 
