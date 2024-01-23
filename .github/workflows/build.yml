@@ -126,20 +126,3 @@ jobs:
           context: Shark-Proxy-Spider
           push: true
           tags: sage668/shark-proxy-spider:latest
-
-  deploy:
-    needs: [build-checker, build-platform, build-spider]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy to server
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PWD }}
-          script: |
-            cd /root/compose
-            docker-compose pull proxy-check proxy-spider proxy-platform
-            docker-compose up -d
