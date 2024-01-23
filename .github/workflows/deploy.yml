@@ -18,5 +18,4 @@ jobs:
           script: |
             cd /root/compose
             docker-compose pull proxy-check proxy-spider proxy-platform
-            docker system prune
             docker-compose up -d
