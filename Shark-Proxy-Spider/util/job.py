@@ -1,23 +1,49 @@
 # -*- coding: utf-8 -*-
 
-from schedule import every, repeat, run_pending
+import config
+from mq.producer import send_to_add_queue
 from fetcher.fetcher import ProxyFetcher
 from util.log_handler import LogHandler
-from mq.producer import send_to_add_queue
+from apscheduler.triggers.cron import CronTrigger
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 log = LogHandler('job', file=False)
+scheduler = BlockingScheduler()
+p = ProxyFetcher()
 
 
-def start_task():
-    common_task()
+def task_proxy(method_name):
+    """
+    抓取任务前置代理
+    """
+    log.info(f"任务: {method_name} 开始执行")
 
-    while True:
-        run_pending()
+    fetch_method = getattr(p, method_name, None)
 
-
-@repeat(every(1).hour)
-def common_task():
-    log.info(f'common任务启动')
-
-    for i in ProxyFetcher.common():
+    count = 0
+    for i in fetch_method():
         send_to_add_queue(i)
+        count += 1
+
+    log.info(f"任务: {method_name} 执行成功，抓取数量: {count}")
+
+
+def start():
+    """
+    启动编排所有定时任务
+    """
+    # 编排定时任务
+    for task_config in config.FETCHER_TASK_CONFIG:
+        name = task_config['name']
+        cron = task_config['cron']
+
+        # 首次执行
+        task_proxy(name)
+
+        # 编排调度
+        log.info(f'任务：{name} cron: {cron} 定时初始化')
+        trigger = CronTrigger.from_crontab(cron)
+        scheduler.add_job(task_proxy, trigger, args=(name,), name=name, max_instances=1)
+
+    # 启动调度器
+    scheduler.start()

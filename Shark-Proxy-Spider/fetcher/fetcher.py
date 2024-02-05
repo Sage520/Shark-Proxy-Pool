@@ -2,6 +2,7 @@
 
 import re
 import config
+import time
 from util.log_handler import LogHandler
 from util.web_request import WebRequest
 
@@ -36,3 +37,5 @@ class ProxyFetcher(object):
                             yield f'{_}:{type}:{source}'
             except Exception as e:
                 log.error('common抓取异常: ', e)
+
+            time.sleep(10)

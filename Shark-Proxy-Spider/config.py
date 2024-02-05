@@ -120,3 +120,12 @@ FETCHER_COMMON_SOURCE = [
         'source': 'mmpx12/proxy-list'
     }
 ]
+
+# ############# 抓取任务配置 #################
+FETCHER_TASK_CONFIG = [
+    {
+        # 每小时执行一次
+        'name': 'common',
+        'cron': '0 * * * *'
+    }
+]
