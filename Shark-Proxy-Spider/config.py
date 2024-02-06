@@ -132,5 +132,15 @@ FETCHER_TASK_CONFIG = [
         # 每10分钟执行一次
         'name': 'kxdaili',
         'cron': '*/10 * * * *'
+    },
+    {
+        # 每10分钟执行一次
+        'name': 'kuaidaili',
+        'cron': '*/10 * * * *'
+    },
+    {
+        # 每10分钟执行一次
+        'name': 'ip3366',
+        'cron': '*/10 * * * *'
     }
 ]
