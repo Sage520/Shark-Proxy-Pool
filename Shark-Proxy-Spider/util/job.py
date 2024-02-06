@@ -34,16 +34,17 @@ def start():
     """
     # 编排定时任务
     for task_config in config.FETCHER_TASK_CONFIG:
-        name = task_config['name']
+        name_list = task_config['name']
         cron = task_config['cron']
 
-        # 首次执行
-        task_proxy(name)
+        for name in name_list:
+            # 首次执行
+            task_proxy(name)
 
-        # 编排调度
-        log.info(f'任务：{name} cron: {cron} 定时初始化')
-        trigger = CronTrigger.from_crontab(cron)
-        scheduler.add_job(task_proxy, trigger, args=(name,), name=name, max_instances=1)
+            # 编排调度
+            log.info(f'任务：{name} cron: {cron} 定时初始化')
+            trigger = CronTrigger.from_crontab(cron)
+            scheduler.add_job(task_proxy, trigger, args=(name,), name=name, max_instances=1)
 
     # 启动调度器
     scheduler.start()

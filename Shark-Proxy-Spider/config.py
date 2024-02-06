@@ -125,22 +125,12 @@ FETCHER_COMMON_SOURCE = [
 FETCHER_TASK_CONFIG = [
     {
         # 每小时执行一次
-        'name': 'common',
+        'name': ['common'],
         'cron': '0 * * * *'
     },
     {
         # 每10分钟执行一次
-        'name': 'kxdaili',
-        'cron': '*/10 * * * *'
-    },
-    {
-        # 每10分钟执行一次
-        'name': 'kuaidaili',
-        'cron': '*/10 * * * *'
-    },
-    {
-        # 每10分钟执行一次
-        'name': 'ip3366',
+        'name': ['kxdaili', 'kuaidaili', 'ip3366'],
         'cron': '*/10 * * * *'
     }
 ]
