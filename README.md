@@ -94,4 +94,4 @@ http://localhost:80
 - [Lazycat](https://github.com/1054711110)
 
 ## Stargazers over time
-[![Stargazers over time](https://starchart.cc/520/Shark-Proxy-Pool.svg)](https://starchart.cc/520/Shark-Proxy-Pool)
+[![Stargazers over time](https://starchart.cc/Sage520/Shark-Proxy-Pool.svg?variant=adaptive)](https://starchart.cc/Sage520/Shark-Proxy-Pool)
