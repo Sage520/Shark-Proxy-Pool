@@ -3,7 +3,7 @@
 <p align="center">免费代理IP库 | Free Proxy</p>
 
 <p align=center>
-<a href="https://proxy.sage.run" target="_blank">首页</a> |
+<a href="https://proxy.010438.xyz" target="_blank">首页</a> |
 <a href="https://github.com/Sage520/Shark-Proxy-Pool" target="_blank">Github</a>
 </p>
 
@@ -46,7 +46,7 @@ http://localhost:80
 ```
 
 ## 接口文档
-* URL: https://proxy.sage.run/api/get
+* URL: https://proxy.010438.xyz/api/get
 * 请求方式: get
 * 请求参数
 
@@ -94,4 +94,4 @@ http://localhost:80
 - [Lazycat](https://github.com/1054711110)
 
 ## Stargazers over time
-[![Stargazers over time](https://starchart.cc/Sage520/Shark-Proxy-Pool.svg)](https://starchart.cc/Sage520/Shark-Proxy-Pool)
+[![Stargazers over time](https://starchart.cc/520/Shark-Proxy-Pool.svg)](https://starchart.cc/520/Shark-Proxy-Pool)
