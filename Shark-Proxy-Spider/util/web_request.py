@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 """
 -------------------------------------------------
    File Name：     WebRequest
@@ -18,7 +20,7 @@ import requests
 import random
 import time
 
-from handler.logHandler import LogHandler
+from util.log_handler import LogHandler
 
 requests.packages.urllib3.disable_warnings()
 
@@ -102,4 +104,3 @@ class WebRequest(object):
         except Exception as e:
             self.log.error(str(e))
             return {}
-
