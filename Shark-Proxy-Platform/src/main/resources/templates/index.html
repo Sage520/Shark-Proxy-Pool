@@ -70,6 +70,7 @@
                         :header-cell-style="headStyle"
                         :cell-style="rowStyle"
                         :empty-text="$t('main.table.emptyText')"
+                        @row-click="rowClick"
                         size="medium"
                 >
                     <el-table-column
@@ -148,6 +149,9 @@
                             :label="$t('main.table.lastCheckTime')"
                             width="210"
                     >
+                        <template slot-scope="scope">
+                            <span>{{ scope.row.lastCheckTime }}</span>
+                        </template>
                     </el-table-column>
                 </el-table>
             </div>
@@ -203,6 +207,25 @@
             this.getTableData()
         },
         methods: {
+            // 表格行点击 复制
+            rowClick(row, column, event) {
+                let copyText = row.ip + ':' + row.port
+
+                navigator.clipboard
+                    .writeText(copyText)
+                    .then(() => {
+                        this.$message({
+                            message: this.$t('main.table.rowClickSuccess'),
+                            type: 'success'
+                        });
+                    })
+                    .catch((err) => {
+                        this.$message({
+                            message: this.$t('main.table.rowClickError'),
+                            type: 'error'
+                        });
+                    });
+            },
             // 导航栏切换
             handleMenuChange(val) {
                 let menuUrl = this.menuList[val]

@@ -30,7 +30,9 @@ const messages = {
                 anonymous_1: 'Anonymous',
                 anonymous_2: 'Elite',
                 survivalRate: 'SurvivalRate',
-                lastCheckTime: 'LastCheckTime'
+                lastCheckTime: 'LastCheckTime',
+                rowClickSuccess: 'Copy Successful',
+                rowClickError: 'Copy Failed'
             }
         },
         footer: {
@@ -60,7 +62,9 @@ const messages = {
                 anonymous_1: '普匿',
                 anonymous_2: '高匿',
                 survivalRate: '存活率',
-                lastCheckTime: '最后验证时间'
+                lastCheckTime: '最后验证时间',
+                rowClickSuccess: '复制成功',
+                rowClickError: '复制失败'
             }
         },
         footer: {
