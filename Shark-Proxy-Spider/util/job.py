@@ -3,11 +3,11 @@
 import config
 from mq.producer import send_to_add_queue
 from fetcher.fetcher import ProxyFetcher
-from util.log_handler import LogHandler
+from util.log_util import get_logger
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-log = LogHandler('job', file=False)
+log = get_logger(__name__)
 scheduler = BlockingScheduler()
 p = ProxyFetcher()
 

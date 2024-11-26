@@ -3,12 +3,10 @@
 import re
 import config
 import time
-from util.log_handler import LogHandler
+from util.log_util import get_logger
 from util.web_request import WebRequest
 
-
-log = LogHandler('fetcher', file=False)
-
+log = get_logger(__name__)
 
 class ProxyFetcher(object):
     """
