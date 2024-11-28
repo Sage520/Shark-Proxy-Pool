@@ -20,7 +20,7 @@ import requests
 import random
 import time
 
-from util.log_handler import LogHandler
+from util.log_util import get_logger
 
 requests.packages.urllib3.disable_warnings()
 
@@ -29,7 +29,7 @@ class WebRequest(object):
     name = "web_request"
 
     def __init__(self, *args, **kwargs):
-        self.log = LogHandler(self.name, file=False)
+        self.log = get_logger(self.name)
         self.response = Response()
 
     @property

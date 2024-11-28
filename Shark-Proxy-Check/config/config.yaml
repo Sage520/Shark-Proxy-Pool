@@ -1,5 +1,5 @@
 check:
-  http-url: http://www.baidu.com
+  http-url: https://www.baidu.com
   https-url: https://www.baidu.com
   anonymous-url: http://httpbin.org/get
   thread: 100

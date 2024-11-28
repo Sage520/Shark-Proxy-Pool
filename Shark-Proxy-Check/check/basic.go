@@ -76,6 +76,7 @@ func (proxy *Proxy) CheckAnonymous(client *http.Client) {
 
 	// 读取响应体
 	body, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
 	if err != nil {
 		return
 	}

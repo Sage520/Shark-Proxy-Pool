@@ -9,7 +9,10 @@ import (
 func main() {
 
 	// http
-	//proxy, _ := check.NewProxyFromJSON("{\"ip\": \"72.10.160.90\", \"port\": \"23743\", \"type\": 1, \"firstCheck\": true}")
+	proxy, _ := check.NewProxyFromJSON("{\"ip\": \"218.87.205.37\", \"port\": \"18066\", \"type\": 1, \"firstCheck\": true}")
+
+	// https
+	// proxy, _ := check.NewProxyFromJSON("{\"ip\": \"47.109.94.96\", \"port\": \"8090\", \"type\": 2, \"firstCheck\": true}")
 
 	// socks4
 	//proxy, _ := check.NewProxyFromJSON("{\"ip\": \"64.20.62.75\", \"port\": \"12276\", \"type\": 3, \"firstCheck\": true}")
@@ -23,8 +26,10 @@ func main() {
 	//CheckPort
 	start := time.Now() // 记录开始时间
 
-	proxy3, _ := check.NewProxyFromJSON("{\"ip\": \"1.1.1.1\", \"port\": \"80\", \"type\": 4, \"firstCheck\": true}")
-	fmt.Println(proxy3.CheckPort())
+	// proxy, _ := check.NewProxyFromJSON("{\"ip\": \"1.1.1.1\", \"port\": \"80\", \"type\": 4, \"firstCheck\": true}")
+	fmt.Println(proxy.CheckPort())
+	proxy.Check()
+	fmt.Println(proxy)
 
 	elapsed := time.Since(start) // 计算经过的时间
 
