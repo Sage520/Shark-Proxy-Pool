@@ -93,4 +93,14 @@ public class Proxy extends BaseEntity {
      */
     private Integer survivalRate;
 
+    /**
+     * 是否支持Post (0 = 不支持 1 = 支持)
+     */
+    private Integer supportHttps;
+
+    /**
+     * 是否支持Post (0 = 不支持 1 = 支持)
+     */
+    private Integer supportPost;
+
 }

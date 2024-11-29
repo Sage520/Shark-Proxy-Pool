@@ -74,6 +74,8 @@ public class ProxyServiceImpl implements ProxyService {
             addProxy.setCheckCount(0);
             addProxy.setTimeoutCount(0);
             addProxy.setSurvivalRate(0);
+            addProxy.setSupportHttps(ProxyEnum.Support.NO.getCode());
+            addProxy.setSupportPost(ProxyEnum.Support.NO.getCode());
             BeanUtil.copyProperties(proxy, addProxy);
 
             // 直接新增，依靠唯一索引去重
@@ -118,6 +120,12 @@ public class ProxyServiceImpl implements ProxyService {
                 if (proxy.getFirstCheck()) {
                     if (ProxyEnum.Anonymous.codeVerify(proxy.getAnonymous())) {
                         update.set("anonymous", proxy.getAnonymous());
+                    }
+                    if (ProxyEnum.Support.codeVerify(proxy.getSupportHttps())) {
+                        update.set("supportHttps", proxy.getSupportHttps());
+                    }
+                    if (ProxyEnum.Support.codeVerify(proxy.getSupportPost())) {
+                        update.set("supportPost", proxy.getSupportPost());
                     }
 
                     // 地区信息
@@ -206,6 +214,11 @@ public class ProxyServiceImpl implements ProxyService {
         fields.add("type");
         fields.add("anonymous");
         fields.add("lastCheckTime");
+        fields.add("supportHttps");
+        fields.add("supportPost");
+        fields.add("country");
+        fields.add("province");
+        fields.add("respTime");
 
         Criteria criteria = Criteria.where("status").is(ProxyEnum.Status.SURVIVE.getCode());
 
@@ -228,8 +241,6 @@ public class ProxyServiceImpl implements ProxyService {
         }
 
         if (ObjectUtil.isNotEmpty(proxy.getCountry())) {
-            fields.add("country");
-
             // 外国为除中国之外
             if (Constants.REGION_EXTERNAL.equals(proxy.getCountry())) {
                 criteria.and("country").ne(Constants.REGION_CHINA);
@@ -239,8 +250,15 @@ public class ProxyServiceImpl implements ProxyService {
         }
 
         if (ObjectUtil.isNotEmpty(proxy.getProvince())) {
-            fields.add("province");
             criteria.and("province").is(proxy.getProvince());
+        }
+
+        if (ObjectUtil.isNotNull(proxy.getSupportHttps())) {
+            criteria.and("supportHttps").is(proxy.getSupportHttps());
+        }
+
+        if (ObjectUtil.isNotNull(proxy.getSupportPost())) {
+            criteria.and("supportPost").is(proxy.getSupportPost());
         }
 
         Aggregation aggregation =
@@ -257,11 +275,8 @@ public class ProxyServiceImpl implements ProxyService {
             // json
             if (Constants.RESP_TYPE_JSON.equals(proxy.getRespType())) {
                 GetProxyVo vo = new GetProxyVo();
-                vo.setIp(res.getIp());
-                vo.setPort(res.getPort());
+                BeanUtil.copyProperties(res, vo);
                 vo.setType(res.getType());
-                vo.setAnonymous(res.getAnonymous());
-                vo.setLastCheckTime(res.getLastCheckTime());
                 return AjaxResult.success(vo);
             }
 
@@ -313,7 +328,7 @@ public class ProxyServiceImpl implements ProxyService {
         pageVo.setPageSize(pageSize);
 
         // 查询条件
-        query.fields().include("ip").include("port").include("type").include("status").include("country").include("province").include("anonymous").include("lastCheckTime").include("respTime").include("survivalRate");
+        query.fields().include("ip").include("port").include("type").include("status").include("country").include("province").include("anonymous").include("lastCheckTime").include("respTime").include("survivalRate").include("supportHttps").include("supportPost");
         query.addCriteria(Criteria.where("status").is(ProxyEnum.Status.SURVIVE.getCode()));
 
         // 总页码

@@ -55,6 +55,8 @@ http://localhost:80
   |port|string|false|端口号|8080, 80|
   |type|int|false|代理协议类型 （1 = http 2 = https 3 = socks4 4 = socks5）|1, 2, 3, 4|
   |anonymous|int|false|匿名类型 （1 = 透明 2 = 普匿 3 = 高匿）|1, 2, 3|
+  |supportHttps|int|false|是否支持HTTPS请求 （0 = 不支持 1 = 支持）|0, 1|
+  |supportPost|int|false|是否支持POST请求 （0 = 不支持 1 = 支持）|0, 1|
   |country|string|false|国家|中国, 美国, 外国 （除中国之外所有国家）|
   |province|string|false|省（只有中国地区数据才有此字段）|江苏省, 浙江省|
   |respType|string|false|接口响应格式（默认json）|json, txt|
@@ -65,11 +67,17 @@ http://localhost:80
     "msg": "success",
     "code": 200,
     "data": {
-        "ip": "103.96.147.225",
-        "port": "3128",
+        "ip": "58.246.58.150",
+        "port": "9002",
         "type": "http",
-        "lastCheckTime": 1704689100061,
-        "anonymous": 3
+        "status": 1,
+        "country": "中国",
+        "province": "上海",
+        "respTime": "2.459",
+        "lastCheckTime": 1732789497531,
+        "anonymous": 3,
+        "supportHttps": 0,
+        "supportPost": 1
     }
 }
 ```
@@ -82,6 +90,8 @@ http://localhost:80
 接口限制并发 1秒 / 5次，多次触流控会进入黑名单！
 
 ## 更新日志
+- 2024.11.29 - 增加代理是否支持HTTPS请求，POST请求能力检测
+- 2024.11.29 - 爬虫程序MQ增加心跳，自动重连逻辑
 - 2024.5.18 - 优化爬虫抓取逻辑，增加通用配置
 - 2024.5.18 - 增加点击表格复制IP信息功能
 - 2023.6.5 - 网页增加国际化支持（简体中文，English）

@@ -211,4 +211,69 @@ public class ProxyEnum {
         }
     }
 
+    /**
+     * 能力支持 (0 = 不支持 1 = 支持)
+     *
+     * @author Sage
+     * @date 2023/02/03
+     */
+    public enum Support {
+        NO(0, "不支持"),
+
+        YES(1, "支持");
+
+        private Integer code;
+
+        private String name;
+
+        Support(Integer code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * 代码验证
+         *
+         * @param code 代码
+         * @return boolean
+         */
+        public static boolean codeVerify(Integer code) {
+            if (ObjectUtil.isNotNull(code)) {
+                for (Support item : Support.values()) {
+                    if (item.getCode().equals(code)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * 查询指定枚举
+         *
+         * @param code 代码
+         * @return boolean
+         */
+        public static Support getEnumByCode(Integer code) {
+            if (ObjectUtil.isNotNull(code)) {
+                for (Support item : Support.values()) {
+                    if (item.getCode().equals(code)) {
+                        return item;
+                    }
+                }
+            }
+
+            return null;
+        }
+    }
+
 }

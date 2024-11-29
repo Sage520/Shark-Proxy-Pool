@@ -53,4 +53,14 @@ public class ProxyUpdateTo implements Serializable {
      */
     private Boolean firstCheck;
 
+    /**
+     * 是否支持Post (0 = 不支持 1 = 支持)
+     */
+    private Integer supportHttps;
+
+    /**
+     * 是否支持Post (0 = 不支持 1 = 支持)
+     */
+    private Integer supportPost;
+
 }
