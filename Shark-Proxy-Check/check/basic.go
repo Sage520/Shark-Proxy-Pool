@@ -14,6 +14,8 @@ import (
 
 var httpUrl = config.Config.Check.HttpUrl
 var anonymousUrl = config.Config.Check.AnonymousUrl
+var httpsUrl = config.Config.Check.HttpsUrl
+var postUrl = config.Config.Check.PostUrl
 var timeout = config.Config.Check.Timeout
 
 func (proxy *Proxy) CheckProxy(client *http.Client) {
@@ -76,7 +78,6 @@ func (proxy *Proxy) CheckAnonymous(client *http.Client) {
 
 	// 读取响应体
 	body, err := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(body))
 	if err != nil {
 		return
 	}
@@ -104,6 +105,46 @@ func (proxy *Proxy) CheckAnonymous(client *http.Client) {
 		} else {
 			proxy.Anonymous = constant.AnonymousAdvanced
 		}
+	}
+}
+
+func (proxy *Proxy) CheckHttps(client *http.Client) {
+	// 创建一个请求对象
+	req, err := http.NewRequest("GET", httpsUrl, nil)
+	if err != nil {
+		return
+	}
+
+	// 发送请求
+	resp, err := client.Do(req)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+
+	// 检查是否成功
+	if resp.StatusCode == http.StatusOK {
+		proxy.SupportHttps = constant.SupportYes
+	}
+}
+
+func (proxy *Proxy) CheckPost(client *http.Client) {
+	// 创建一个请求对象
+	req, err := http.NewRequest("POST", postUrl, nil)
+	if err != nil {
+		return
+	}
+
+	// 发送请求
+	resp, err := client.Do(req)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+
+	// 检查是否成功
+	if resp.StatusCode == http.StatusOK {
+		proxy.SupportPost = constant.SupportYes
 	}
 }
 

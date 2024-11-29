@@ -23,6 +23,7 @@ type CheckConfig struct {
 	HttpUrl      string `mapstructure:"http-url"`
 	HttpsUrl     string `mapstructure:"https-url"`
 	AnonymousUrl string `mapstructure:"anonymous-url"`
+	PostUrl      string `mapstructure:"post-url"`
 	Thread       int    `mapstructure:"thread"`
 	Timeout      int    `mapstructure:"timeout"`
 }

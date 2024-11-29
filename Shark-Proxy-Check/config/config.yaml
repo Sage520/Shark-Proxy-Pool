@@ -1,7 +1,8 @@
 check:
-  http-url: https://www.baidu.com
+  http-url: http://www.baidu.com
   https-url: https://www.baidu.com
   anonymous-url: http://httpbin.org/get
+  post-url: http://httpbin.org/post
   thread: 100
   timeout: 5
 

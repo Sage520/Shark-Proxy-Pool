@@ -19,6 +19,8 @@ type Proxy struct {
 	Type          int     `json:"type"`          // 类型 (1 = http 2 = https 3 = socks4 4 = socks5)
 	Anonymous     int     `json:"anonymous"`     // 匿名度 (1 = 透明 2 = 普匿 3 = 高匿)
 	Status        int     `json:"status"`        // 状态 (0 = 超时 1 = 存活)
+	SupportPost   int     `json:"supportPost"`   // 是否支持Post (0 = 不支持 1 = 支持)
+	SupportHttps  int     `json:"supportHttps"`  // 是否支持Https (0 = 不支持 1 = 支持)
 	LastCheckTime int64   `json:"lastCheckTime"` // 最后检查时间/时间戳
 	RespTime      float64 `json:"respTime"`      // 响应时间 单位s 保留3位小数
 	ProxyUrl      string  `json:"proxyUrl"`      // 代理地址
@@ -93,6 +95,8 @@ func (p *Proxy) Check() {
 	if p.FirstCheck {
 		if p.PreCheck() {
 			p.CheckAnonymous(client)
+			p.CheckHttps(client)
+			p.CheckPost(client)
 		}
 	} else {
 		p.CheckProxy(client)

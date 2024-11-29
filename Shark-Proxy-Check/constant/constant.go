@@ -15,4 +15,8 @@ const (
 	// 状态 (0 = 超时 1 = 存活)
 	StatusTimeout  = 0
 	StatusSurvival = 1
+
+	// 能力支持 (0 = 不支持 1 = 支持)
+	SupportNo  = 0
+	SupportYes = 1
 )
