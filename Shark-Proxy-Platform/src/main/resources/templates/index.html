@@ -63,6 +63,7 @@
         <div class="content">
             <div class="table">
                 <el-table
+                        v-loading="tableLoading"
                         ref="table"
                         border="true"
                         stripe="true"
@@ -83,7 +84,7 @@
                     <el-table-column
                             prop="port"
                             :label="$t('main.table.port')"
-                            width="120">
+                            width="80">
                     </el-table-column>
 
                     <el-table-column
@@ -119,6 +120,30 @@
                             <el-tag
                                     :type="typeTagFormat(scope.row.type)"
                                     disable-transitions>{{ typeFormat(scope.row.type) }}</el-tag>
+                        </template>
+                    </el-table-column>
+
+                    <!-- HTTPS 支持 -->
+                    <el-table-column
+                            prop="supportHttps"
+                            :label="$t('main.table.supportHttps')"
+                            width="80"
+                    >
+                        <template slot-scope="scope">
+                            <i v-if="scope.row.supportHttps" class="el-icon-circle-check success text-lg"></i>
+                            <i v-else class="el-icon-circle-close danger text-lg"></i>
+                        </template>
+                    </el-table-column>
+
+                    <!-- POST 支持 -->
+                    <el-table-column
+                            prop="supportPost"
+                            :label="$t('main.table.supportPost')"
+                            width="80"
+                    >
+                        <template slot-scope="scope">
+                            <i v-if="scope.row.supportPost" class="el-icon-circle-check success text-lg"></i>
+                            <i v-else class="el-icon-circle-close danger text-lg"></i>
                         </template>
                     </el-table-column>
 
@@ -192,6 +217,7 @@
         i18n,
         el: '#app',
         data: {
+            tableLoading: false,
             tableData: [],
             pageNo: 1,
             pageSize: 10,
@@ -240,6 +266,7 @@
             },
             // 请求列表数据
             getTableData() {
+                this.tableLoading = true
                 axios.get(`/proxy/list?pageNo=${this.pageNo}`).then((res) => {
                     if (res.status === 200 && res.data.code === 200) {
                         let data = res.data.data
@@ -248,6 +275,7 @@
                         this.pageSize = data.pageSize
                         this.tableData = data.list
                     }
+                    this.tableLoading = false
                 })
             },
             // 表格切换页数
