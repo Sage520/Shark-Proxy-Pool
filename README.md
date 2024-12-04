@@ -86,6 +86,23 @@ http://localhost:80
 183.89.115.39:80
 ```
 
+## 爬虫源增加
+### 符合 IP:端口 格式的数据
+直接修改爬虫的config.py文件，在里面新增一条记录即可
+url = 网址
+type = 类型（1 = http 2 = https 3 = socks4 4 = socks5）
+source = 来源备注
+![image](./images/spider-add-1.png)
+
+### 不符合 IP:端口 格式的数据，自定义代码逻辑
+1. 修改 Shark-Proxy-Spider/fetcher/fetcher.py 复制现有函数为一个新的，入参出差保持一定，自己实现爬虫逻辑即可
+![image](./images/spider-add-2.png)
+
+2. 修改爬虫的config.py文件，增加新自定义函数的cron规则
+name = 函数名
+cron = cron表达式
+![image](./images/spider-add-3.png)
+
 ## 访问频率限制
 接口限制并发 1秒 / 5次，多次触流控会进入黑名单！
 
