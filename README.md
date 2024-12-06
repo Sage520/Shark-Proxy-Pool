@@ -1,11 +1,11 @@
-<h1 align="center">Shark - Proxy</h1>
-
-<p align="center">免费代理IP库 | Free Proxy</p>
-
-<p align=center>
-<a href="https://proxy.010438.xyz" target="_blank">首页</a> |
-<a href="https://github.com/Sage520/Shark-Proxy-Pool" target="_blank">Github</a>
-</p>
+<div align="center">
+<h1 align="center">Shark-Proxy-Pool</h1>
+<img src="https://img.shields.io/github/issues/Sage520/Shark-Proxy-Pool?color=8ab803">
+<img src="https://img.shields.io/github/stars/Sage520/Shark-Proxy-Pool?color=cda619">
+<img src="https://img.shields.io/github/forks/Sage520/Shark-Proxy-Pool?color=e97536">
+<img src="https://img.shields.io/github/license/Sage520/Shark-Proxy-Pool?color=ff69b4">
+<img src="https://img.shields.io/github/languages/code-size/Sage520/Shark-Proxy-Pool?color=7f2ace">
+</div>
 
 ***
 
