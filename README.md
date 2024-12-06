@@ -88,9 +88,9 @@ http://localhost:80
 
 ## 爬虫源增加
 ### 符合 IP:端口 格式的数据
-直接修改爬虫的config.py文件，在里面新增一条记录即可
-url = 网址
-type = 类型（1 = http 2 = https 3 = socks4 4 = socks5）
+直接修改爬虫的config.py文件，在里面新增一条记录即可  
+url = 网址  
+type = 类型（1 = http 2 = https 3 = socks4 4 = socks5）  
 source = 来源备注
 ![image](./images/spider-add-1.png)
 
