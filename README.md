@@ -103,6 +103,9 @@ name = 函数名
 cron = cron表达式
 ![image](./images/spider-add-3.png)
 
+## 项目赞助
+<img src="./images/money-wechat.jpg" alt="wechat" title="wechat" width="300" height="200">
+
 ## 访问频率限制
 接口限制并发 1秒 / 5次，多次触流控会进入黑名单！
 
