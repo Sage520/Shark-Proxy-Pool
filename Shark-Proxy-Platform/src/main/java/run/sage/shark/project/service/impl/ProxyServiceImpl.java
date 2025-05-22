@@ -333,13 +333,6 @@ public class ProxyServiceImpl implements ProxyService {
 
         // 总页码
         long count = mongoTemplate.count(query, Proxy.class);
-        if (ObjectUtil.isNotNull(count)) {
-            if (count > 50) {
-                pageVo.setPageCount(50);
-            } else {
-                pageVo.setPageCount(count);
-            }
-        }
 
         // 分页参数
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
