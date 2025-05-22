@@ -36,7 +36,7 @@ public class PageApiController {
      */
     @RateLimiter(qps = 5, limitType = LimitType.IP)
     @GetMapping("/list")
-    public AjaxResult index(@RequestParam(name = "pageNo", defaultValue = "1") @Range(min = 1, max = 5) Integer pageNo) throws ExecutionException {
+    public AjaxResult index(@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) throws ExecutionException {
         return AjaxResult.success(cacheService.getIndexData(pageNo));
     }
 

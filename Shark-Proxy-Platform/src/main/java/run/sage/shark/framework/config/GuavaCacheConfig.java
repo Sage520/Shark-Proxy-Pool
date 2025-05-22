@@ -30,9 +30,9 @@ public class GuavaCacheConfig {
                 // 设置写缓存后10秒钟后过期
                 .expireAfterWrite(5, TimeUnit.MINUTES)
                 // 设置缓存容器的初始容量为8
-                .initialCapacity(6)
+                .initialCapacity(20)
                 // 设置缓存最大容量为10，超过10之后就会按照LRU最近虽少使用算法来移除缓存项
-                .maximumSize(6)
+                .maximumSize(500)
                 // 指定CacheLoader，在缓存不存在时通过CacheLoader的实现自动加载缓存
                 .build(new CacheLoader<String, Object>() {
                     @Override
