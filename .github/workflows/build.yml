@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cache Go dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/go/pkg/mod
           key: ${{ runner.os }}-go-${{ hashFiles('Shark-Proxy-Check/go.mod') }}
@@ -59,7 +59,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cache Maven dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('Shark-Proxy-Platform/pom.xml') }}
@@ -98,7 +98,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cache Python dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python-${{ hashFiles('Shark-Proxy-Spider/requirements.txt') }}
